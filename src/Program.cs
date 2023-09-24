@@ -18,12 +18,13 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped(c => new CategoriaRepository(cosmosClient, databaseName));
 builder.Services.AddScoped(c => new FormaPagamentoRepository(cosmosClient, databaseName));
+builder.Services.AddScoped(c => new TransacaoRepository(cosmosClient, databaseName));
 
 var app = builder.Build();
 
 app.MapEndpointsCategoria();
 app.MapEndpointsFormaPagamento();
-app.MapEndpointsTransacao(databaseName);
+app.MapEndpointsTransacao();
 
 if (app.Environment.IsDevelopment())
 {

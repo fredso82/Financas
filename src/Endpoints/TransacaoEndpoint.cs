@@ -1,22 +1,40 @@
-﻿using Financas.DTO;
+﻿using Financas.Data;
+using Financas.DTO;
 using Financas.Models;
-using Microsoft.Azure.Cosmos;
 
 namespace Financas.EndPoints
 {
     public static class TransacaoEndpoint
     {
-        private static readonly string nomeContainer = "Transacoes";
-        public static void MapEndpointsTransacao(this WebApplication app, string nomeBancoDados)
+        public static void MapEndpointsTransacao(this WebApplication app)
         {
-            app.MapPost("transacoes", async (TransacaoInclusaoDto transacaoDto, CosmosClient cosmosClient) =>
+            app.MapGet("transacoes", async (TransacaoRepository transacaoRepository) =>
             {
-                var containerCategoria = cosmosClient.GetContainer(nomeBancoDados, "Categorias");
-                var containerFormaPagamento = cosmosClient.GetContainer(nomeBancoDados, "FormasPagamento");
-                var containerTransacao = cosmosClient.GetContainer(nomeBancoDados, nomeContainer);
+                var transacoes = await transacaoRepository.GetAll();
+                return EndpointBase.CustomResponse(transacoes);
 
-                var categoria = (await containerCategoria.ReadItemAsync<Categoria>(transacaoDto.IdCategoria, new PartitionKey(transacaoDto.IdCategoria))).Resource;
-                var formaPagamento = (await containerFormaPagamento.ReadItemAsync<FormaPagamento>(transacaoDto.IdFormaPagamento, new PartitionKey(transacaoDto.IdFormaPagamento))).Resource;
+            }).WithOpenApi();
+
+            app.MapGet("transacoes/{id}", async (TransacaoRepository transacaoRepository, string id) =>
+            {
+                var transacao = await transacaoRepository.GetById(id);
+                if (transacao == null)
+                    return Results.NotFound();
+
+                return EndpointBase.CustomResponse(transacao);
+
+            }).WithOpenApi();
+
+            app.MapPost("transacoes", async (TransacaoInsertDto transacaoDto, TransacaoRepository transacaoRepository,
+                CategoriaRepository categoriaRepository, FormaPagamentoRepository formaPagamentoRepository) =>
+            {
+                var categoria = await categoriaRepository.GetById(transacaoDto.IdCategoria);
+                if (categoria is null)
+                    return EndpointBase.CustomResponse(transacaoDto, new List<string> { "A categoria informada não foi localizada" });
+
+                var formaPagamento = await formaPagamentoRepository.GetById(transacaoDto.IdFormaPagamento);
+                if (formaPagamento is null)
+                    return EndpointBase.CustomResponse(transacaoDto, new List<string> { "A forma de pagamento informada não foi localizada" });
 
                 var transacao = new Transacao
                 {
@@ -32,9 +50,60 @@ namespace Financas.EndPoints
                     Valor = transacaoDto.Valor,
                 };
 
-                var response = await containerTransacao.CreateItemAsync(transacao);
+                var erros = transacao.IsValid();
+                if (erros.Any())
+                    return EndpointBase.CustomResponse(transacaoDto, erros);
 
-                return EndpointBase.CustomResponse(response.Resource);
+                var transacaoDb = await transacaoRepository.Insert(transacao);
+
+                return EndpointBase.CustomResponse(transacaoDb);
+
+            }).WithOpenApi();
+
+            app.MapPut("/transacoes/{id}", async (TransacaoRepository transacaoRepository, string id, TransacaoInsertDto transacaoDto,
+                CategoriaRepository categoriaRepository, FormaPagamentoRepository formaPagamentoRepository) =>
+            {
+                var categoria = await categoriaRepository.GetById(transacaoDto.IdCategoria);
+                if (categoria is null)
+                    return EndpointBase.CustomResponse(transacaoDto, new List<string> { "A categoria informada não foi localizada" });
+
+                var formaPagamento = await formaPagamentoRepository.GetById(transacaoDto.IdFormaPagamento);
+                if (formaPagamento is null)
+                    return EndpointBase.CustomResponse(transacaoDto, new List<string> { "A forma de pagamento informada não foi localizada" });
+
+                var transacao = await transacaoRepository.GetById(id);
+                if (transacao is null)
+                    return EndpointBase.CustomResponse(transacaoDto, new List<string> { "Não foi possível localizar os dados do id informado" });
+
+                transacao.Categoria = categoria;
+                transacao.Descricao = transacaoDto.Descricao;
+                transacao.Despesa = transacaoDto.Despesa;
+                transacao.DataInclusao = transacaoDto.DataInclusao;
+                transacao.FormaPagamento = formaPagamento;
+                transacao.IdTransacaoPrincipal = transacaoDto.IdTransacaoPrincipal;
+                transacao.Nome = transacaoDto.Nome;
+                transacao.Rateado = transacaoDto.Rateado;
+                transacao.Realizado = transacaoDto.Realizado;
+                transacao.Valor = transacaoDto.Valor;
+
+                var erros = transacao.IsValid();
+                if (erros.Any())
+                    return EndpointBase.CustomResponse(transacaoDto, erros);
+
+                var transacaoDb = await transacaoRepository.Update(id, transacao);
+                return EndpointBase.CustomResponse(transacaoDb);
+
+            }).WithOpenApi();
+
+            app.MapDelete("/transacoes/{id}", async (TransacaoRepository transacaoRepository, string id) =>
+            {
+                var transacao = await transacaoRepository.GetById(id);
+                if (transacao is null)
+                    return Results.NotFound();
+
+                await transacaoRepository.Delete(id);
+
+                return EndpointBase.CustomResponse();
 
             }).WithOpenApi();
         }

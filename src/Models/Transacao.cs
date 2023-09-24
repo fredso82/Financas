@@ -16,5 +16,23 @@ namespace Financas.Models
         public bool Rateado { get; set; } = false;
         public Categoria? Categoria { get; set; } = null;
         public FormaPagamento? FormaPagamento { get; set; } = null;
+
+        public List<string> IsValid()
+        {
+            var erros = new List<string>();
+            if (string.IsNullOrWhiteSpace(Nome))
+                erros.Add("O nome da transação é obrigatório");
+
+            if (Valor <= 0)
+                erros.Add("O valor da transação deve ser maior do que zero");
+
+            if (FormaPagamento is null)
+                erros.Add("A forma de pagamento é obrigatória");
+
+            if (Categoria is null)
+                erros.Add("A categoria é obrigatória");
+
+            return erros;
+        }
     }
 }

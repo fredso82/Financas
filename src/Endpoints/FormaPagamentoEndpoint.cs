@@ -34,8 +34,8 @@ namespace Financas.EndPoints
                 if (formaPagamentoDb is not null)
                     return EndpointBase.CustomResponse(formaPagamentoDb, new List<string> { "Já existe uma forma de pagamento com esse nome" });
 
-                var formaPagamentoCosmos = await formaPagamentoRepository.Insert(formaPagamento);
-                return EndpointBase.CustomResponse(formaPagamentoCosmos);
+                formaPagamentoDb = await formaPagamentoRepository.Insert(formaPagamento);
+                return EndpointBase.CustomResponse(formaPagamentoDb);
 
             }).WithOpenApi();
 
