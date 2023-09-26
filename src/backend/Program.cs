@@ -4,13 +4,21 @@ using Microsoft.Azure.Cosmos;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder => builder
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader());
+});
+
 var endpoinUri = builder.Configuration.GetSection("CosmosDb").GetValue<string>("endpoinUri");
 var primaryKey = builder.Configuration.GetSection("CosmosDb").GetValue<string>("primaryKey"); 
-var databaseName = builder.Configuration.GetSection("CosmosDb").GetValue<string>("databaseName"); 
+var databaseName = builder.Configuration.GetSection("CosmosDb").GetValue<string>("databaseName") ?? string.Empty; 
 
 var cosmosClientOptions = new CosmosClientOptions { ApplicationName = databaseName };
 var cosmosClient = new CosmosClient(endpoinUri, primaryKey, cosmosClientOptions);
-cosmosClient.ClientOptions.ConnectionMode = ConnectionMode.Gateway;
+cosmosClient.ClientOptions.ConnectionMode = ConnectionMode.Direct;
 
 builder.Services.AddSingleton(cosmosClient);
 builder.Services.AddEndpointsApiExplorer();
@@ -32,5 +40,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors();
 app.UseHttpsRedirection();
 app.Run();
