@@ -1,5 +1,6 @@
 ﻿using Financas.Data;
 using Financas.Models;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Financas.EndPoints
 {
@@ -10,7 +11,7 @@ namespace Financas.EndPoints
             app.MapGet("categorias", async (CategoriaRepository categoriaRepository) =>
             {
                 var categorias = await categoriaRepository.GetAll();
-                return EndpointBase.CustomResponse(categorias);
+                return Results.Ok(categorias);
 
             }).WithOpenApi();
 
@@ -20,7 +21,7 @@ namespace Financas.EndPoints
                 if (categoria == null)
                     return Results.NotFound();
 
-                return EndpointBase.CustomResponse(categoria);
+                return Results.Ok(categoria);
 
             }).WithOpenApi();
 
@@ -28,14 +29,14 @@ namespace Financas.EndPoints
             {
                 var erros = categoria.IsValid();
                 if (erros is not null && erros.Any())
-                    return EndpointBase.CustomResponse(categoria, erros);
+                    return Results.BadRequest(erros);
 
                 var categoriaDb = await categoriaRepository.GetByName(categoria.Nome);
                 if (categoriaDb is not null)
-                    return EndpointBase.CustomResponse(categoriaDb, new List<string> { "Já existe uma categoria com esse nome"});
+                    return Results.BadRequest(new List<string> { "Já existe uma categoria com esse nome" });
 
                 categoriaDb = await categoriaRepository.Insert(categoria);
-                return EndpointBase.CustomResponse(categoriaDb);
+                return Results.Ok(categoriaDb);
 
             }).WithOpenApi();
 
@@ -43,7 +44,7 @@ namespace Financas.EndPoints
             {
                 var erros = categoria.IsValid();
                 if (erros is not null && erros.Any())
-                    return EndpointBase.CustomResponse(categoria, erros);
+                    return Results.BadRequest(erros);
 
                 var categoriaDb = await categoriaRepository.GetById(id);
                 if (categoriaDb is null)
@@ -51,11 +52,11 @@ namespace Financas.EndPoints
 
                 categoriaDb = await categoriaRepository.GetByName(categoria.Nome);
                 if (categoriaDb is not null && categoriaDb.Id != id)
-                    return EndpointBase.CustomResponse(categoriaDb, new List<string> { "Já existe uma categoria com esse nome" });
+                    return Results.BadRequest(new List<string> { "Já existe uma categoria com esse nome" });
 
                 categoriaDb = await categoriaRepository.Update(id, categoria);
 
-                return EndpointBase.CustomResponse(categoriaDb);
+                return Results.Ok(categoriaDb);
 
             }).WithOpenApi();
 
@@ -67,7 +68,7 @@ namespace Financas.EndPoints
 
                 await categoriaRepository.Delete(id);
 
-                return EndpointBase.CustomResponse();
+                return Results.Ok();
 
             }).WithOpenApi();
         }

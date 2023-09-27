@@ -11,7 +11,7 @@ namespace Financas.EndPoints
             app.MapGet("transacoes", async (TransacaoRepository transacaoRepository) =>
             {
                 var transacoes = await transacaoRepository.GetAll();
-                return EndpointBase.CustomResponse(transacoes);
+                return Results.Ok(transacoes);
 
             }).WithOpenApi();
 
@@ -21,7 +21,7 @@ namespace Financas.EndPoints
                 if (transacao == null)
                     return Results.NotFound();
 
-                return EndpointBase.CustomResponse(transacao);
+                return Results.Ok(transacao);
 
             }).WithOpenApi();
 
@@ -30,11 +30,11 @@ namespace Financas.EndPoints
             {
                 var categoria = await categoriaRepository.GetById(transacaoDto.IdCategoria);
                 if (categoria is null)
-                    return EndpointBase.CustomResponse(transacaoDto, new List<string> { "A categoria informada não foi localizada" });
+                    return Results.BadRequest(new List<string> { "A categoria informada não foi localizada" });
 
                 var formaPagamento = await formaPagamentoRepository.GetById(transacaoDto.IdFormaPagamento);
                 if (formaPagamento is null)
-                    return EndpointBase.CustomResponse(transacaoDto, new List<string> { "A forma de pagamento informada não foi localizada" });
+                    return Results.BadRequest(new List<string> { "A forma de pagamento informada não foi localizada" });
 
                 var transacao = new Transacao
                 {
@@ -52,11 +52,11 @@ namespace Financas.EndPoints
 
                 var erros = transacao.IsValid();
                 if (erros.Any())
-                    return EndpointBase.CustomResponse(transacaoDto, erros);
+                    return Results.BadRequest(erros);
 
                 var transacaoDb = await transacaoRepository.Insert(transacao);
 
-                return EndpointBase.CustomResponse(transacaoDb);
+                return Results.Ok(transacaoDb);
 
             }).WithOpenApi();
 
@@ -65,15 +65,15 @@ namespace Financas.EndPoints
             {
                 var categoria = await categoriaRepository.GetById(transacaoDto.IdCategoria);
                 if (categoria is null)
-                    return EndpointBase.CustomResponse(transacaoDto, new List<string> { "A categoria informada não foi localizada" });
+                    return Results.BadRequest(new List<string> { "A categoria informada não foi localizada" });
 
                 var formaPagamento = await formaPagamentoRepository.GetById(transacaoDto.IdFormaPagamento);
                 if (formaPagamento is null)
-                    return EndpointBase.CustomResponse(transacaoDto, new List<string> { "A forma de pagamento informada não foi localizada" });
+                    return Results.BadRequest(new List<string> { "A forma de pagamento informada não foi localizada" });
 
                 var transacao = await transacaoRepository.GetById(id);
                 if (transacao is null)
-                    return EndpointBase.CustomResponse(transacaoDto, new List<string> { "Não foi possível localizar os dados do id informado" });
+                    return Results.BadRequest(new List<string> { "Não foi possível localizar os dados do id informado" });
 
                 transacao.Categoria = categoria;
                 transacao.Descricao = transacaoDto.Descricao;
@@ -88,10 +88,10 @@ namespace Financas.EndPoints
 
                 var erros = transacao.IsValid();
                 if (erros.Any())
-                    return EndpointBase.CustomResponse(transacaoDto, erros);
+                    return Results.BadRequest( erros);
 
                 var transacaoDb = await transacaoRepository.Update(id, transacao);
-                return EndpointBase.CustomResponse(transacaoDb);
+                return Results.Ok(transacaoDb);
 
             }).WithOpenApi();
 
@@ -103,7 +103,7 @@ namespace Financas.EndPoints
 
                 await transacaoRepository.Delete(id);
 
-                return EndpointBase.CustomResponse();
+                return Results.Ok();
 
             }).WithOpenApi();
         }

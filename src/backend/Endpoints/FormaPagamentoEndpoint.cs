@@ -10,7 +10,7 @@ namespace Financas.EndPoints
             app.MapGet("formas-de-pagamento", async (FormaPagamentoRepository formaPagamentoRepository) =>
             {
                 var formasPagamento = await formaPagamentoRepository.GetAll();
-                return EndpointBase.CustomResponse(formasPagamento);
+                return Results.Ok(formasPagamento);
 
             }).WithOpenApi();
 
@@ -20,7 +20,7 @@ namespace Financas.EndPoints
                 if (formaPagamento == null)
                     return Results.NotFound();
 
-                return EndpointBase.CustomResponse(formaPagamento);
+                return Results.Ok(formaPagamento);
 
             }).WithOpenApi();
 
@@ -28,14 +28,14 @@ namespace Financas.EndPoints
             {
                 var erros = formaPagamento.IsValid();
                 if (erros is not null && erros.Any())
-                    return EndpointBase.CustomResponse(formaPagamento, erros);
+                    return Results.BadRequest(erros);
 
                 var formaPagamentoDb = await formaPagamentoRepository.GetByName(formaPagamento.Nome);
                 if (formaPagamentoDb is not null)
-                    return EndpointBase.CustomResponse(formaPagamentoDb, new List<string> { "Já existe uma forma de pagamento com esse nome" });
+                    return Results.BadRequest(new List<string> { "Já existe uma forma de pagamento com esse nome" });
 
                 formaPagamentoDb = await formaPagamentoRepository.Insert(formaPagamento);
-                return EndpointBase.CustomResponse(formaPagamentoDb);
+                return Results.Ok(formaPagamentoDb);
 
             }).WithOpenApi();
 
@@ -43,7 +43,7 @@ namespace Financas.EndPoints
             {
                 var erros = formaPagamento.IsValid();
                 if (erros is not null && erros.Any())
-                    return EndpointBase.CustomResponse(formaPagamento, erros);
+                    return Results.Ok(erros);
 
                 var formaPagamentoDb = await formaPagamentoRepository.GetById(id);
                 if (formaPagamentoDb is null)
@@ -51,11 +51,11 @@ namespace Financas.EndPoints
 
                 formaPagamentoDb = await formaPagamentoRepository.GetByName(formaPagamento.Nome);
                 if (formaPagamentoDb is not null && formaPagamentoDb.Id != id)
-                    return EndpointBase.CustomResponse(formaPagamentoDb, new List<string> { "Já existe uma forma de pagamento com esse nome" });
+                    return Results.BadRequest(new List<string> { "Já existe uma forma de pagamento com esse nome" });
 
                 formaPagamentoDb = await formaPagamentoRepository.Update(id, formaPagamento);
 
-                return EndpointBase.CustomResponse(formaPagamentoDb);
+                return Results.Ok(formaPagamentoDb);
 
             }).WithOpenApi();
 
@@ -67,7 +67,7 @@ namespace Financas.EndPoints
 
                 await formaPagamentoRepository.Delete(id);
 
-                return EndpointBase.CustomResponse();
+                return Results.Ok();
 
             }).WithOpenApi();
         }
