@@ -2,10 +2,18 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'categoria', pathMatch: 'full'},
+  { path: '', redirectTo: 'lancamentos', pathMatch: 'full'},
   {
-    path: 'categoria',
+    path: 'lancamentos',
+    loadChildren: () => import('./lancamento/lancamento.module').then(m => m.LancamentoModule)
+  },
+  {
+    path: 'categorias',
     loadChildren: () => import('./categoria/categoria.module').then(m => m.CategoriaModule)
+  },
+  {
+    path: 'formas-de-pagamento',
+    loadChildren: () => import('./forma-pagamento/forma-pagamento.module').then(m => m.FormaPagamentoModule)
   }
 
 ];

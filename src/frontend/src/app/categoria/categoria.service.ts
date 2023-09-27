@@ -13,10 +13,6 @@ export class CategoriaService extends BaseService {
   constructor(private http: HttpClient) { super() }
 
   obterTodos(): Observable<Categoria[]> {
-    return this.http.get<Categoria[]>(this.UrlService + "categorias")
-		.pipe(
-        map(this.extractData),
-        catchError(super.serviceError)
-      );
+    return this.http.get<Categoria[]>(this.UrlService + "categorias");
   }
 }

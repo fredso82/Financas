@@ -9,7 +9,7 @@ import { Categoria } from '../models/categoria';
 })
 export class ListaComponent implements OnInit {
   categorias: Categoria[] = [];
-
+  
   constructor(private categoriaService: CategoriaService){
 
   }
@@ -20,7 +20,8 @@ export class ListaComponent implements OnInit {
         next: (retorno) => {
           console.log(retorno);
           this.categorias = retorno;
-        }
+        },
+        error: (e) => {console.log(e.error)}
       });
   }
 
