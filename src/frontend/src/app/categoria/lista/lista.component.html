@@ -1,9 +1,10 @@
+<ngx-ui-loader></ngx-ui-loader>
 <div class="card" style="margin-bottom: 20px;">
    <p-toolbar>
     <div class="p-toolbar-group-start">
-        <p-button label="Nova Categoria" icon="pi pi-plus" class="mr-2"></p-button>
+        <p-button label="Nova Categoria" icon="pi pi-plus" class="mr-2" [routerLink]="['/categorias/novo']"></p-button>
     </div>
-</p-toolbar> 
+    </p-toolbar> 
 </div>
 
 
@@ -19,3 +20,13 @@
         </tr>
     </ng-template>
 </p-table>
+
+<div class="card flex justify-content-center">
+    <p-dialog header="Ocorreu um Problema" [(visible)]="dialogVisible" [style]="{width: '50vw'}">
+            <table>
+                <tr *ngFor="let error of errorsMessage">
+                    <td>{{error}}</td>
+                </tr>
+            </table>
+    </p-dialog>
+</div>

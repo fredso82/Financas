@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable } from 'rxjs';
-
+import { NgxUiLoaderModule } from 'ngx-ui-loader';
 import { BaseService } from '../services/base.service';
 import { Categoria } from './models/categoria';
 
@@ -14,5 +14,6 @@ export class CategoriaService extends BaseService {
 
   obterTodos(): Observable<Categoria[]> {
     return this.http.get<Categoria[]>(this.UrlService + "categorias");
+    //.pipe(catchError(this.serviceError));
   }
 }

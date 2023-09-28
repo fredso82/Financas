@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
+
 import { CategoriaService } from '../categoria.service';
 import { Categoria } from '../models/categoria';
 
@@ -9,20 +11,30 @@ import { Categoria } from '../models/categoria';
 })
 export class ListaComponent implements OnInit {
   categorias: Categoria[] = [];
+  dialogVisible = false;
+  errorsMessage: string[] = [];
   
-  constructor(private categoriaService: CategoriaService){
-
+  constructor(private categoriaService: CategoriaService, private ngxService: NgxUiLoaderService){
   }
 
   ngOnInit(): void {
+    this.ngxService.start()
     this.categoriaService.obterTodos()
       .subscribe({
         next: (retorno) => {
-          console.log(retorno);
           this.categorias = retorno;
         },
-        error: (e) => {console.log(e.error)}
+        complete: () => {this.ngxService.stop()},
+        error: (e) => {  
+          this.processarFalha(e);        
+        }
       });
   }
-
+  
+  processarFalha(fail: any) {
+    fail.error.forEach((msg: string) => {
+      this.errorsMessage.push(msg);
+      this.dialogVisible = true;
+      });
+  }
 }
