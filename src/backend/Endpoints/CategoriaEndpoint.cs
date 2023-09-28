@@ -1,6 +1,7 @@
 ﻿using Financas.Data;
 using Financas.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Financas.EndPoints
 {
