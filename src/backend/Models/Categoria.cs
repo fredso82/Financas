@@ -9,6 +9,12 @@ namespace Financas.Models
         public string Nome { get; set; } = string.Empty;
         //public List<Transacao> Transacoes { get; set; }
 
+        public Categoria(string nome)
+        {
+            Id =  Guid.NewGuid().ToString();
+            Nome = nome;
+        }
+
         public List<string> IsValid()
         {
             var erros = new List<string>();

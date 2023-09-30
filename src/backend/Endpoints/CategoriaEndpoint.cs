@@ -1,4 +1,5 @@
 ﻿using Financas.Data;
+using Financas.DTO;
 using Financas.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -26,8 +27,10 @@ namespace Financas.EndPoints
 
             }).WithOpenApi();
 
-            app.MapPost("categorias", async (CategoriaRepository categoriaRepository, Categoria categoria) =>
+            app.MapPost("categorias", async (CategoriaRepository categoriaRepository, CategoriaInsertDto categoriaDto) =>
             {
+                var categoria = new Categoria(categoriaDto.Nome);
+                
                 var erros = categoria.IsValid();
                 if (erros is not null && erros.Any())
                     return Results.BadRequest(erros);
