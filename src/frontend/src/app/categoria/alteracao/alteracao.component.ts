@@ -1,22 +1,21 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Categoria } from '../models/categoria';
 import { CategoriaService } from '../categoria.service';
 
 @Component({
-    selector: 'app-categoria-novo',
-    templateUrl: './novo.component.html'
+    selector: 'app-catagoria-alteracao',
+    templateUrl: './alteracao.component.html'
 })
-export class NovaCategoriaComponent implements OnInit {
+export class AlteracaoCategoriaComponent implements OnInit {
     @Output() onSave = new EventEmitter<{ sucesso: boolean, dados: any }>();
-
-    categoria: Categoria;
+    @Input() categoria: Categoria = {id: "", nome: ""}; 
+    
     submitted = false;
-
-    constructor(private categoriaService: CategoriaService) {
-        this.categoria = { id: "", nome: "" };
+    
+    constructor(private categoriaService: CategoriaService) {     
     }
-    ngOnInit(): void {
 
+    ngOnInit(): void {
     }
 
     gravar() {
@@ -24,7 +23,7 @@ export class NovaCategoriaComponent implements OnInit {
         if (!this.categoria.nome.trim())
             return;
 
-        this.categoriaService.incluir(this.categoria).subscribe({
+        this.categoriaService.alterar(this.categoria).subscribe({
             next: (e) => {
                 this.onSave.emit({ sucesso: true, dados: this.categoria });
             },
@@ -33,5 +32,4 @@ export class NovaCategoriaComponent implements OnInit {
             }
         });
     }
-
 }
