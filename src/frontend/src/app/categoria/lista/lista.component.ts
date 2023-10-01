@@ -26,7 +26,7 @@ export class ListaComponent implements OnInit {
 
     constructor(private categoriaService: CategoriaService, private ngxService: NgxUiLoaderService, private messageService: MessageService) {
     }
-
+    
     ngOnInit(): void {
         this.ngxService.start()
         this.atualizarCategorias();

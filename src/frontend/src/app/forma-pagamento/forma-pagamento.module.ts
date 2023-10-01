@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { MessageService } from 'primeng/api';
 
+import { SharedModule } from '../shared/shared.module';
 import { FormaPagamentoRoutingModule } from './forma-pagamento-routing.module';
+import { FormaPagamentoService } from './forma-pagamento.service';
 import { ListaComponent } from './lista/lista.component';
 
 
@@ -10,8 +12,12 @@ import { ListaComponent } from './lista/lista.component';
     ListaComponent
   ],
   imports: [
-    CommonModule,
+    SharedModule,
     FormaPagamentoRoutingModule
+  ],
+  providers: [
+    FormaPagamentoService,
+    MessageService
   ]
 })
 export class FormaPagamentoModule { }
