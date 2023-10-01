@@ -8,7 +8,7 @@ import { MenuItem } from 'primeng/api';
 export class AppComponent {
     title = 'financas';
     items: MenuItem[] = [
-        { label: 'Lançamentos', icon: 'pi pi-fw pi-list', routerLink: ['/lancamentos'] },
+        { label: 'Lançamentos', icon: 'pi pi-fw pi-shopping-bag', routerLink: ['/lancamentos'] },
         { label: 'Categorias', icon: 'pi pi-fw pi-tags', routerLink: ['/categorias'] },
         { label: 'Formas de Pagamento', icon: 'pi pi-fw pi-credit-card', routerLink: ['/formas-de-pagamento'] }
     ];
