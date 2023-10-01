@@ -1,19 +1,15 @@
 <ngx-ui-loader></ngx-ui-loader>
 <p-toast position="top-center"></p-toast>
 
-<div class="card" style="margin-bottom: 20px;">
-    <p-toolbar>
-        <div class="p-toolbar-group-start">
-            <p-button label="Nova Categoria" icon="pi pi-plus" class="mr-2" (click)="modalInclusao = true"></p-button>
-        </div>
-    </p-toolbar>
+<div class="buttonAdd">
+    <p-button icon="pi pi-plus" styleClass="p-button-rounded p-button-success"
+                (click)="modalInclusao = true" pTooltip="Atalho: Alt + n"></p-button>
 </div>
-
 <p-table [value]="categorias" [tableStyle]="{ 'min-width': '50rem' }"
     styleClass="p-datatable-striped p-datatable-gridlines">
     <ng-template pTemplate="header">
         <tr>
-            <th style="width: 140px;"></th>
+            <th style="width: 140px; text-align: center;"></th>
             <th>Nome</th>
         </tr>
     </ng-template>

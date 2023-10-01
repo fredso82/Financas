@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 import { CategoriaService } from '../categoria.service';
@@ -17,7 +17,7 @@ export class ListaComponent implements OnInit {
     @ViewChild(AlteracaoCategoriaComponent) categoriaAlteracao!: AlteracaoCategoriaComponent;
 
     categorias: Categoria[] = [];
-    categoria: Categoria = {id: "", nome: ""};
+    categoria: Categoria = { id: "", nome: "" };
     dialogVisible = false;
     errorsMessage: string[] = [];
     modalInclusao = false;
@@ -29,7 +29,19 @@ export class ListaComponent implements OnInit {
 
     ngOnInit(): void {
         this.ngxService.start()
-        this.atualizarCategorias();   
+        this.atualizarCategorias();
+    }
+
+    @HostListener('document:keydown', ['$event'])
+    handleKeyDown(event: KeyboardEvent): void {
+        const targetElement = event.target as HTMLElement;
+        if (targetElement.tagName === 'INPUT' || targetElement.tagName === 'TEXTAREA') {
+            return;
+        }
+        
+        if (event.altKey && event.key === 'n') {
+            this.modalInclusao = true;
+        }
     }
 
     processarFalha(fail: any) {
@@ -39,8 +51,7 @@ export class ListaComponent implements OnInit {
         });
     }
 
-    atualizarCategorias()
-    {
+    atualizarCategorias() {
         this.categoriaService.obterTodos()
             .subscribe({
                 next: (retorno) => {
@@ -79,8 +90,8 @@ export class ListaComponent implements OnInit {
         });
     }
 
-    processarInclusao(resultado: any) {    
-        this.errorsMessage = [];    
+    processarInclusao(resultado: any) {
+        this.errorsMessage = [];
         if (resultado.sucesso) {
             this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Categoria incluída com sucesso!', life: 3000 });
             this.hideDialog();
