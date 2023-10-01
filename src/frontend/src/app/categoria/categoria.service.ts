@@ -32,4 +32,11 @@ export class CategoriaService extends BaseService {
                 first()
             );
     }
+
+    excluir(id: string): Observable<Categoria> {
+        return this.http.delete<Categoria>(`${this.UrlService}categorias/${id}`)
+            .pipe(
+                first()
+            );
+    }
 }

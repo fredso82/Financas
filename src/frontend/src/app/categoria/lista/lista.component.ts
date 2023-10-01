@@ -22,6 +22,7 @@ export class ListaComponent implements OnInit {
     errorsMessage: string[] = [];
     modalInclusao = false;
     modalAlteracao = false;
+    modalExclusao = false;
 
     constructor(private categoriaService: CategoriaService, private ngxService: NgxUiLoaderService, private messageService: MessageService) {
     }
@@ -62,10 +63,21 @@ export class ListaComponent implements OnInit {
         this.modalAlteracao = true;
     }
 
-    // excluir(orgao: Orgao) {
-    //     this.orgao = { ...orgao };
-    //     this.modalExclusao = true;
-    // }
+    excluir(categoria: Categoria) {
+        this.categoria = { ...categoria };
+        this.modalExclusao = true;
+    }
+
+    confirmarExclusao() {
+        this.modalExclusao = false;
+        this.categoriaService.excluir(this.categoria.id).subscribe({
+            next: () => {
+                this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Categoria excluída com sucesso!', life: 3000 });
+                this.atualizarCategorias()
+            },
+            error: (e) => this.processarFalha(e)
+        });
+    }
 
     processarInclusao(resultado: any) {    
         this.errorsMessage = [];    

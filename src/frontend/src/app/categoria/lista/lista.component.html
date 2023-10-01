@@ -1,27 +1,30 @@
 <ngx-ui-loader></ngx-ui-loader>
-<p-toast></p-toast>
+<p-toast position="top-center"></p-toast>
 
 <div class="card" style="margin-bottom: 20px;">
-   <p-toolbar>
-    <div class="p-toolbar-group-start">
-        <p-button label="Nova Categoria" icon="pi pi-plus" class="mr-2" (click)="modalInclusao = true"></p-button>
-    </div>
-    </p-toolbar> 
+    <p-toolbar>
+        <div class="p-toolbar-group-start">
+            <p-button label="Nova Categoria" icon="pi pi-plus" class="mr-2" (click)="modalInclusao = true"></p-button>
+        </div>
+    </p-toolbar>
 </div>
 
-<p-table [value]="categorias" [tableStyle]="{ 'min-width': '50rem' }" styleClass="p-datatable-striped p-datatable-gridlines">
+<p-table [value]="categorias" [tableStyle]="{ 'min-width': '50rem' }"
+    styleClass="p-datatable-striped p-datatable-gridlines">
     <ng-template pTemplate="header">
         <tr>
-            <th style="width: 40px;"></th>
+            <th style="width: 140px;"></th>
             <th>Nome</th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-categoria>
         <tr>
             <td>
-                <div class="flex">
-                    <p-button icon="pi pi-pencil" styleClass="p-button-rounded p-button-success" (click)="editar(categoria)"></p-button>
-                    <!-- <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="excluir(categoria)"></button> -->
+                <div class="actionButtons">
+                    <p-button icon="pi pi-pencil" styleClass="p-button-rounded p-button-success" pTooltip="Alterar"
+                        (click)="editar(categoria)"></p-button>
+                    <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-warning" pTooltip="Excluir"
+                        (click)="excluir(categoria)"></p-button>
                 </div>
             </td>
             <td>{{ categoria.nome }}</td>
@@ -29,32 +32,49 @@
     </ng-template>
 </p-table>
 
-<p-dialog [(visible)]="modalInclusao" [style]="{ width: '450px' }" header="Nova Categoria" [modal]="true" class="p-fluid">
+<p-dialog [(visible)]="modalInclusao" [style]="{ width: '450px' }" header="Nova Categoria" [modal]="true"
+    class="p-fluid">
     <ng-template pTemplate="content">
         <app-categoria-novo (onSave)="processarInclusao($event)"></app-categoria-novo>
     </ng-template>
     <ng-template pTemplate="footer">
         <button pButton pRipple label="Fechar" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-        <button pButton pRipple label="Gravar" icon="pi pi-check" class="p-button-text" (click)="categoriaInclusao.gravar()"></button>
-    </ng-template>            
+        <button pButton pRipple label="Gravar" icon="pi pi-check" class="p-button-text"
+            (click)="categoriaInclusao.gravar()"></button>
+    </ng-template>
 </p-dialog>
 
-<p-dialog [(visible)]="modalAlteracao" [style]="{ width: '450px' }" header="Orgão" [modal]="true" class="p-fluid">
+<p-dialog [(visible)]="modalAlteracao" [style]="{ width: '450px' }" header="Alteração" [modal]="true" class="p-fluid">
     <ng-template pTemplate="content">
-        <app-catagoria-alteracao (onSave)="processarAlteracao($event)" [categoria]="categoria"></app-catagoria-alteracao>
+        <app-catagoria-alteracao (onSave)="processarAlteracao($event)"
+            [categoria]="categoria"></app-catagoria-alteracao>
     </ng-template>
     <ng-template pTemplate="footer">
         <button pButton pRipple label="Fechar" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-        <button pButton pRipple label="Gravar" icon="pi pi-check" class="p-button-text" (click)="categoriaAlteracao.gravar()"></button>
-    </ng-template>            
+        <button pButton pRipple label="Gravar" icon="pi pi-check" class="p-button-text"
+            (click)="categoriaAlteracao.gravar()"></button>
+    </ng-template>
+</p-dialog>
+
+<p-dialog [(visible)]="modalExclusao" header="Atenção!" [modal]="true" [style]="{ width: '450px' }">
+    <div class="flex align-items-center justify-content-center">
+        <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem; margin-right: 10px;"></i>
+        <span *ngIf="categoria">Confirma a exclusão da categoria<b> {{ categoria.nome }}</b>?</span>
+    </div>
+    <ng-template pTemplate="footer">
+        <button pButton pRipple icon="pi pi-times" class="p-button-text" label="Não"
+            (click)="modalExclusao = false"></button>
+        <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Sim"
+            (click)="confirmarExclusao()"></button>
+    </ng-template>
 </p-dialog>
 
 <div class="card flex justify-content-center">
     <p-dialog header="Ocorreu um Problema" [(visible)]="dialogVisible" [style]="{width: '50vw'}">
-            <table>
-                <tr *ngFor="let error of errorsMessage">
-                    <td>{{error}}</td>
-                </tr>
-            </table>
+        <table>
+            <tr *ngFor="let error of errorsMessage">
+                <td>{{error}}</td>
+            </tr>
+        </table>
     </p-dialog>
 </div>
