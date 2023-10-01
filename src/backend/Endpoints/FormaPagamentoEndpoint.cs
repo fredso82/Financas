@@ -1,4 +1,5 @@
 ﻿using Financas.Data;
+using Financas.DTO;
 using Financas.Models;
 
 namespace Financas.EndPoints
@@ -24,8 +25,10 @@ namespace Financas.EndPoints
 
             }).WithOpenApi();
 
-            app.MapPost("formas-de-pagamento", async (FormaPagamento formaPagamento, FormaPagamentoRepository formaPagamentoRepository) =>
+            app.MapPost("formas-de-pagamento", async (FormaPagamentoInsertDto formaPagamentoDto, FormaPagamentoRepository formaPagamentoRepository) =>
             {
+                var formaPagamento = new FormaPagamento(formaPagamentoDto.Nome);
+                
                 var erros = formaPagamento.IsValid();
                 if (erros is not null && erros.Any())
                     return Results.BadRequest(erros);

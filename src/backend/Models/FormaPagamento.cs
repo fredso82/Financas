@@ -8,6 +8,12 @@ namespace Financas.Models
         public string Id { get; set; } = Guid.NewGuid().ToString();
         public string Nome { get; set; } = string.Empty;
 
+        public FormaPagamento(string nome)
+        {
+            Id = Guid.NewGuid().ToString();
+            Nome = nome;
+
+        }
         public List<string> IsValid()
         {
             var erros = new List<string>();
