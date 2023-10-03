@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { LancamentoRoutingModule } from './lancamento-routing.module';
 import { ListaComponent } from './lista/lista.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { ListaComponent } from './lista/lista.component';
   ],
   imports: [
     CommonModule,
-    LancamentoRoutingModule
+    LancamentoRoutingModule,
+    SharedModule
   ]
 })
 export class LancamentoModule { }
