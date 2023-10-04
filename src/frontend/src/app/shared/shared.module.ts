@@ -9,7 +9,7 @@ import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TooltipModule } from 'primeng/tooltip';
-
+import { TabViewModule } from 'primeng/tabview';
 @NgModule({
     exports: [
         CommonModule,
@@ -22,7 +22,8 @@ import { TooltipModule } from 'primeng/tooltip';
         InputTextModule,
         ReactiveFormsModule,
         ToastModule,
-        TooltipModule
+        TooltipModule,
+        TabViewModule
     ]
   })
   export class SharedModule { }
