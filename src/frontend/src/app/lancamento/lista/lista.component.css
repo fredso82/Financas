@@ -40,7 +40,19 @@
     }
 }
 
-.teste  {
-    justify-content: space-between !important;
+.buttonAdd {
+    position: fixed;
+    z-index: 999;
+    bottom: 30px;
+    right: 30px;
+
+    button {
+        height: 4rem;
+        width: 4rem;
+    }
 }
 
+.actionButtons {
+    display: flex;
+    justify-content: space-between;
+}

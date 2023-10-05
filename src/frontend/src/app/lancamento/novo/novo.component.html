@@ -1,0 +1,35 @@
+<ngx-ui-loader></ngx-ui-loader>
+<p-toast></p-toast>
+<p-card header="Novo Lançamento">
+
+    <form novalidate (ngSubmit)="gravar()" [formGroup]="lancamentoForm" class="p-fluid">
+        <div class="row">
+            <div class="field col-6">
+                <label for="categoriaId">Categoria <span class="obrigatorio">*</span></label>
+                <div>
+                    <p-dropdown class="p-dropdown-item w-full" [options]="categorias" appendTo="body" id="categoriaId"
+                        formControlName="categoriaId" placeholder="Selecione uma categoria" optionLabel="nome"
+                        optionValue="id"></p-dropdown>
+                </div>
+            </div>
+            <div class="field col-6">
+                <label for="formaPagamentoId">Forma de Pagamento <span class="obrigatorio">*</span></label>
+                <div style="display: flex;">
+                    <div style="flex: 1; margin-right: 3px;">
+                        <p-dropdown class="p-dropdown-item" [options]="formasPagamento" appendTo="body"
+                            id="formaPagamentoId" formControlName="formaPagamentoId"
+                            placeholder="Selecione uma categoria" optionLabel="nome" optionValue="id"></p-dropdown>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="field col-12">
+            <label for="nome">Nome <span class="obrigatorio">*</span></label>
+            <input type="text" id="nome" pInputText formControlName="nome" autofocus />
+        </div>
+        <div class="field col-12">
+            <label for="nome">Descrição</label>
+            <input type="text" id="nome" pInputText formControlName="descricao" autofocus />
+        </div>
+    </form>
+</p-card>

@@ -9,7 +9,7 @@ import { AlteracaoFormaPagamentoComponent } from '../alteracao/alteracao.compone
 @Component({
   selector: 'app-lista',
   templateUrl: './lista.component.html',
-  styleUrls: ['./lista.component.scss']
+  styleUrls: ['./lista.component.css']
 })
 export class ListaComponent {
     @ViewChild(NovaFormaPagamentoComponent) formaPagamentoInclusao!: NovaFormaPagamentoComponent;
