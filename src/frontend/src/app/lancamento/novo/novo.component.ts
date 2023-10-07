@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { Lancamento } from '../models/lancamento';
+import { Lancamento, LancamentoInclusao } from '../models/lancamento';
 import { Categoria } from 'src/app/categoria/models/categoria';
 import { CategoriaService } from 'src/app/categoria/categoria.service';
 import { FormaPagamento } from 'src/app/forma-pagamento/models/forma-pagamento';
@@ -14,26 +14,48 @@ import { FormaPagamentoService } from 'src/app/forma-pagamento/forma-pagamento.s
   styleUrls: ['./novo.component.scss']
 })
 export class NovoLancamentoComponent implements OnInit {
-    lancamentoForm: FormGroup;
-    lancamento: Lancamento = new Lancamento();
+    lancamento: Partial<LancamentoInclusao> = new LancamentoInclusao();
     categorias?: Categoria[];
     formasPagamento?: FormaPagamento[];
 
-    constructor(private fb: FormBuilder, private messageService: MessageService, private router: Router,
+    // lancamentoForm = this.fb.group({
+    //     nome: ['', [Validators.required]],
+    //     descricao: ['', []],
+    //     valor: [0, [Validators.required]],
+    //     despesa: ['Sim', [Validators.required]],
+    //     realizado: ['Sim', [Validators.required]],
+    //     dataInclusao: [new Date(), [Validators.required]],
+    //     rateado: ['Não', [Validators.required]],
+    //     categoriaId: ['', [Validators.required]],
+    //     formaPagamentoId: ['', [Validators.required]]
+    // });
+
+    lancamentoForm = this.fb.group({
+        nome: ['', []],
+        descricao: ['', []],
+        valor: [0, []],
+        despesa: ['Sim', []],
+        realizado: ['Sim', []],
+        dataInclusao: [new Date(), []],
+        rateado: ['Não', []],
+        categoriaId: ['', []],
+        formaPagamentoId: ['', []]
+    });
+
+    constructor(private fb: NonNullableFormBuilder, private messageService: MessageService, private router: Router,
         private categoriaService: CategoriaService, private formaPagamentoService: FormaPagamentoService){
-
-        this.lancamentoForm = this.fb.group({
-            nome: ['', [Validators.required]],
-            descricao: ['', []],
-            valor: [0, [Validators.required]],
-            despesa: [true, [Validators.required]],
-            realizado: [true, [Validators.required]],
-            dataInclusao: ['', [Validators.required]],
-            rateado: [false, [Validators.required]],
-            categoriaId: ['', [Validators.required]],
-            formaPagamentoId: ['', [Validators.required]]
-        });
-
+            
+        // this.lancamentoForm = this.fb.group({
+        //     nome: ['', [Validators.required]],
+        //     descricao: ['', []],
+        //     valor: [0, [Validators.required]],
+        //     despesa: ['Sim', [Validators.required]],
+        //     realizado: ['Sim', [Validators.required]],
+        //     dataInclusao: [new Date(), [Validators.required]],
+        //     rateado: ['Não', [Validators.required]],
+        //     categoriaId: ['', [Validators.required]],
+        //     formaPagamentoId: ['', [Validators.required]]
+        // });
         this.categoriaService.obterTodos().subscribe({
             next: (response) => this.categorias = response
         });
@@ -47,7 +69,7 @@ export class NovoLancamentoComponent implements OnInit {
     }
 
     gravar() {
-        this.lancamento = {...this.lancamentoForm.value};
+        this.lancamento = this.lancamentoForm.value;
         console.log(this.lancamento);
     }
 

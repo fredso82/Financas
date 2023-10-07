@@ -1,15 +1,14 @@
 <ngx-ui-loader></ngx-ui-loader>
 <p-toast></p-toast>
 <p-card header="Novo Lançamento">
-
-    <form novalidate (ngSubmit)="gravar()" [formGroup]="lancamentoForm" class="p-fluid">
+    <form novalidate (ngSubmit)="gravar()" [formGroup]="lancamentoForm" class="p-fluid" pFocusTrap>
         <div class="row">
             <div class="field col-6">
                 <label for="categoriaId">Categoria <span class="obrigatorio">*</span></label>
                 <div>
-                    <p-dropdown class="p-dropdown-item w-full" [options]="categorias" appendTo="body" id="categoriaId"
-                        formControlName="categoriaId" placeholder="Selecione uma categoria" optionLabel="nome"
-                        optionValue="id"></p-dropdown>
+                    <p-dropdown pAutoFocus [autofocus]="true" class="p-dropdown-item w-full" [options]="categorias"
+                        appendTo="body" id="categoriaId" formControlName="categoriaId"
+                        placeholder="Selecione uma categoria" optionLabel="nome" optionValue="id"></p-dropdown>
                 </div>
             </div>
             <div class="field col-6">
@@ -31,5 +30,35 @@
             <label for="nome">Descrição</label>
             <input type="text" id="nome" pInputText formControlName="descricao" autofocus />
         </div>
+        <div class="row">
+            <div class="field col-2">
+                <label for="valor">Valor</label>
+                <p-inputNumber formControlName="valor" inputId="valor" [min]="0" [maxFractionDigits]="2"
+                    mode="decimal"></p-inputNumber>
+            </div>
+            <div class="field col-2">
+                <label for="despesa">Despesa?</label>
+                <p-dropdown [options]="['Sim', 'Não']" appendTo="body" id="despesa"
+                    formControlName="despesa"></p-dropdown>
+            </div>
+            <div class="field col-2">
+                <label for="realizado">Realizado?</label>
+                <p-dropdown [options]="['Sim', 'Não']" appendTo="body" id="realizado"
+                    formControlName="realizado"></p-dropdown>
+            </div>
+            <div class="field col-2">
+                <label for="dataInclusao">Data</label>
+                <p-calendar id="realizado" dateFormat="dd/mm/yy" [showIcon]="true"
+                    formControlName="dataInclusao"></p-calendar>
+            </div>
+            <div class="field col-2">
+                <label for="rateado">Rateado?</label>
+                <p-dropdown [options]="['Sim', 'Não']" appendTo="body" id="rateado"
+                    formControlName="rateado"></p-dropdown>
+            </div>
+        </div>
+        <button pButton type="submit" label="Gravar" icon="pi pi-check" class="p-button-success botao-acao"></button>
+        <button pButton type="button" label="Voltar" icon="pi pi-arrow-left" class="p-button-info botao-acao"
+            [routerLink]="['/lancamentos']"></button>
     </form>
 </p-card>
