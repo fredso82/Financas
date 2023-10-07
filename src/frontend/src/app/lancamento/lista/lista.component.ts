@@ -1,4 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { FormaPagamentoService } from 'src/app/forma-pagamento/forma-pagamento.service';
 import { FormaPagamento } from 'src/app/forma-pagamento/models/forma-pagamento';
@@ -9,7 +10,10 @@ import { FormaPagamento } from 'src/app/forma-pagamento/models/forma-pagamento';
   styleUrls: ['./lista.component.css']
 })
 export class ListaComponent {
-    modalInclusao = false;
+
+    constructor(private router: Router){
+
+    }
 
     @HostListener('document:keydown', ['$event'])
     handleKeyDown(event: KeyboardEvent): void {
@@ -19,11 +23,9 @@ export class ListaComponent {
         }
         
         if (event.altKey && event.key === 'n') {
-            this.modalInclusao = true;
+            this.router.navigate(['/lancamentos/novo'])
         }
     }
 
-    hideDialog() {
-        this.modalInclusao = false;
-    }
+
 }
