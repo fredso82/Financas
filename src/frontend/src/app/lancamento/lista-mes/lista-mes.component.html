@@ -1,0 +1,17 @@
+<p-table [value]="lancamentos" [tableStyle]="{ 'min-width': '50rem' }"
+    styleClass="p-datatable-striped p-datatable-gridlines">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Data</th>
+            <th>Nome</th>
+            <th>Valor</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-lancamento>
+        <tr>
+            <td>{{lancamento.dataInclusao | date:'dd/MM/yyyy'}}</td>
+            <td>{{lancamento.nome}}</td>
+            <td>{{lancamento.valor | currency: 'BRL'}}</td>
+        </tr>
+    </ng-template>
+</p-table>

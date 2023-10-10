@@ -7,6 +7,7 @@ import { Categoria } from 'src/app/categoria/models/categoria';
 import { CategoriaService } from 'src/app/categoria/categoria.service';
 import { FormaPagamento } from 'src/app/forma-pagamento/models/forma-pagamento';
 import { FormaPagamentoService } from 'src/app/forma-pagamento/forma-pagamento.service';
+import { LancamentoService } from '../lancamento.service';
 
 @Component({
   selector: 'app-novo',
@@ -18,32 +19,21 @@ export class NovoLancamentoComponent implements OnInit {
     categorias?: Categoria[];
     formasPagamento?: FormaPagamento[];
 
-    // lancamentoForm = this.fb.group({
-    //     nome: ['', [Validators.required]],
-    //     descricao: ['', []],
-    //     valor: [0, [Validators.required]],
-    //     despesa: ['Sim', [Validators.required]],
-    //     realizado: ['Sim', [Validators.required]],
-    //     dataInclusao: [new Date(), [Validators.required]],
-    //     rateado: ['Não', [Validators.required]],
-    //     categoriaId: ['', [Validators.required]],
-    //     formaPagamentoId: ['', [Validators.required]]
-    // });
-
     lancamentoForm = this.fb.group({
-        nome: ['', []],
+        nome: ['', [Validators.required]],
         descricao: ['', []],
-        valor: [0, []],
-        despesa: ['Sim', []],
-        realizado: ['Sim', []],
-        dataInclusao: [new Date(), []],
-        rateado: ['Não', []],
-        categoriaId: ['', []],
-        formaPagamentoId: ['', []]
+        valor: [0, [Validators.required]],
+        despesa: ['Sim', [Validators.required]],
+        realizado: ['Sim', [Validators.required]],
+        dataInclusao: [new Date(), [Validators.required]],
+        rateado: ['Não', [Validators.required]],
+        categoriaId: ['', [Validators.required]],
+        formaPagamentoId: ['', [Validators.required]]
     });
 
     constructor(private fb: NonNullableFormBuilder, private messageService: MessageService, private router: Router,
-        private categoriaService: CategoriaService, private formaPagamentoService: FormaPagamentoService){
+        private categoriaService: CategoriaService, private formaPagamentoService: FormaPagamentoService,
+        private lancamentoService: LancamentoService){
             
         // this.lancamentoForm = this.fb.group({
         //     nome: ['', [Validators.required]],
@@ -70,7 +60,22 @@ export class NovoLancamentoComponent implements OnInit {
 
     gravar() {
         this.lancamento = this.lancamentoForm.value;
-        console.log(this.lancamento);
+
+        let lancamentoIncluir  = new Lancamento();
+        lancamentoIncluir.nome = this.lancamentoForm.value.nome as string;
+        lancamentoIncluir.descricao = this.lancamento.descricao;
+        lancamentoIncluir.valor = this.lancamento.valor as number;
+        lancamentoIncluir.despesa = this.lancamento.despesa === "Sim";
+        lancamentoIncluir.realizado = this.lancamento.realizado === "Sim";
+        lancamentoIncluir.realizado = this.lancamento.realizado === "Sim";
+        lancamentoIncluir.dataInclusao = this.lancamento.dataInclusao as Date;
+        lancamentoIncluir.rateado = this.lancamento.rateado === "Sim";
+        lancamentoIncluir.categoriaId = this.lancamento.categoriaId;
+        lancamentoIncluir.formaPagamentoId = this.lancamento.formaPagamentoId;
+
+        this.lancamentoService.incluir(lancamentoIncluir).subscribe({
+            next: (response) => console.log(response)
+        });
     }
 
 }

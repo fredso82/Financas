@@ -8,12 +8,14 @@ import { NovoLancamentoComponent } from './novo/novo.component';
 import { FormaPagamentoService } from '../forma-pagamento/forma-pagamento.service';
 import { MessageService } from 'primeng/api';
 import { CategoriaService } from '../categoria/categoria.service';
+import { ListaMesComponent } from './lista-mes/lista-mes.component';
 
 
 @NgModule({
     declarations: [
         ListaComponent,
-        NovoLancamentoComponent
+        NovoLancamentoComponent,
+        ListaMesComponent
     ],
     imports: [
         CommonModule,

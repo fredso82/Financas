@@ -1,45 +1,3 @@
-.year {
-    background-color: gray;
-    margin: -20px -20px 0 -20px;
-    padding: 10px;
-    display: flex;
-    justify-content: center;
-
-    div {
-        font-size: 1.2rem;
-        font-weight: bold;
-    }
-}
-
-.months {
-    display: flex;
-    justify-content: space-around;
-    text-align: center;
-    background-color: #eae3e3;
-    margin: 0 -20px 0 -20px;
-    padding: 0;
-    height: 40px;
-
-    :hover {
-        background-color: #d7d3d3;
-        transition: all 0.1s ease-in-out;
-        transform: scale(1.1);
-    }
-    div {
-        border: 1px solid black;
-        width: 100%;
-        padding: 10px;
-        cursor: pointer;
-
-
-    }
-
-    .active {
-        background-color: #d7d3d3;
-        transform: scale(1.1);
-    }
-}
-
 .buttonAdd {
     position: fixed;
     z-index: 999;
@@ -47,12 +5,8 @@
     right: 30px;
 
     button {
-        height: 4rem;
-        width: 4rem;
+        height: 4rem !important;
+        width: 4rem !important;
     }
 }
 
-.actionButtons {
-    display: flex;
-    justify-content: space-between;
-}
