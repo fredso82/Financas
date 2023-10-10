@@ -28,11 +28,11 @@ namespace Financas.EndPoints
             app.MapPost("transacoes", async (TransacaoInsertDto transacaoDto, TransacaoRepository transacaoRepository,
                 CategoriaRepository categoriaRepository, FormaPagamentoRepository formaPagamentoRepository) =>
             {
-                var categoria = await categoriaRepository.GetById(transacaoDto.IdCategoria);
+                var categoria = await categoriaRepository.GetById(transacaoDto.CategoriaId);
                 if (categoria is null)
                     return Results.BadRequest(new List<string> { "A categoria informada não foi localizada" });
 
-                var formaPagamento = await formaPagamentoRepository.GetById(transacaoDto.IdFormaPagamento);
+                var formaPagamento = await formaPagamentoRepository.GetById(transacaoDto.FormaPagamentoId);
                 if (formaPagamento is null)
                     return Results.BadRequest(new List<string> { "A forma de pagamento informada não foi localizada" });
 
@@ -63,11 +63,11 @@ namespace Financas.EndPoints
             app.MapPut("/transacoes/{id}", async (TransacaoRepository transacaoRepository, string id, TransacaoInsertDto transacaoDto,
                 CategoriaRepository categoriaRepository, FormaPagamentoRepository formaPagamentoRepository) =>
             {
-                var categoria = await categoriaRepository.GetById(transacaoDto.IdCategoria);
+                var categoria = await categoriaRepository.GetById(transacaoDto.CategoriaId);
                 if (categoria is null)
                     return Results.BadRequest(new List<string> { "A categoria informada não foi localizada" });
 
-                var formaPagamento = await formaPagamentoRepository.GetById(transacaoDto.IdFormaPagamento);
+                var formaPagamento = await formaPagamentoRepository.GetById(transacaoDto.FormaPagamentoId);
                 if (formaPagamento is null)
                     return Results.BadRequest(new List<string> { "A forma de pagamento informada não foi localizada" });
 
