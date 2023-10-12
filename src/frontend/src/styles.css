@@ -4,3 +4,7 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-color: #eff3f8;}
+
+p.p-error.block {
+    margin: 5px;
+}
