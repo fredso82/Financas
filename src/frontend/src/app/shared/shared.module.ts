@@ -17,7 +17,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { CalendarModule } from 'primeng/calendar';
 import { FocusTrapModule } from 'primeng/focustrap';
 import { AutoFocusModule } from 'primeng/autofocus';
-
+import { InputSwitchModule } from 'primeng/inputswitch';
 @NgModule({
     exports: [
         CommonModule,
@@ -38,7 +38,8 @@ import { AutoFocusModule } from 'primeng/autofocus';
         CheckboxModule,
         CalendarModule,
         FocusTrapModule,
-        AutoFocusModule
+        AutoFocusModule,
+        InputSwitchModule
     ]
   })
   export class SharedModule { }
