@@ -8,57 +8,60 @@
                 <label for="valor">Valor R$ *</label>
                 <p-inputNumber pAutoFocus [autofocus]="true" formControlName="valor"
                     [inputStyle]="{'text-align': 'right'}" inputId="valor" [min]="0" [maxFractionDigits]="2"
-                    mode="decimal"></p-inputNumber>
+                    mode="decimal" [ngClass]="{ 'ng-invalid ng-dirty': displayMessage['valor'] }"></p-inputNumber>
+                <small class="p-error block" *ngIf="displayMessage['valor']">
+                    <p class="p-error block" [innerHTML]="displayMessage['valor']"></p>
+                </small>
             </div>
             <div class="field col-3">
                 <label for="nome">Nome <span class="obrigatorio">*</span></label>
-                <input type="text" id="nome" pInputText formControlName="nome" autofocus />
+                <input type="text" id="nome" pInputText formControlName="nome"
+                    [ngClass]="{ 'ng-invalid ng-dirty': displayMessage['nome'] }" autofocus />
+                <small class="p-error block" *ngIf="displayMessage['nome']">
+                    <p class="p-error block" [innerHTML]="displayMessage['nome']"></p>
+                </small>
             </div>
             <div class="field col-7">
                 <label for="nome">Descrição</label>
-                <input type="text" id="nome" pInputText formControlName="descricao" autofocus />
+                <input type="text" id="descricao" pInputText formControlName="descricao" autofocus />
             </div>
         </div>
-        <!-- <div class="row">
-            <div class="field col-3">
-                <label for="nome">Nome <span class="obrigatorio">*</span></label>
-                <input type="text" id="nome" pInputText formControlName="nome" autofocus />
-            </div>
-            <div class="field col-9">
-                <label for="nome">Descrição</label>
-                <input type="text" id="nome" pInputText formControlName="descricao" autofocus />
-            </div>
-        </div> -->
+
         <div class="row">
             <div class="field col-6">
                 <label for="categoriaId">Categoria <span class="obrigatorio">*</span></label>
                 <div>
                     <p-dropdown class="p-dropdown-item w-full" [options]="categorias" appendTo="body" id="categoriaId"
                         formControlName="categoriaId" placeholder="Selecione uma categoria" optionLabel="nome"
-                        optionValue="id"></p-dropdown>
+                        optionValue="id" (blur)="teste()"
+                        [ngClass]="{ 'ng-invalid ng-dirty': displayMessage['categoriaId'] }"></p-dropdown>
+                    <small class="p-error block" *ngIf="displayMessage['categoriaId']">
+                        <p class="p-error block" [innerHTML]="displayMessage['categoriaId']"></p>
+                    </small>
                 </div>
             </div>
             <div class="field col-6">
                 <label for="formaPagamentoId">Forma de Pagamento <span class="obrigatorio">*</span></label>
-                <div style="display: flex;">
-                    <div style="flex: 1; margin-right: 3px;">
-                        <p-dropdown class="p-dropdown-item" [options]="formasPagamento" appendTo="body"
-                            id="formaPagamentoId" formControlName="formaPagamentoId"
-                            placeholder="Selecione uma categoria" optionLabel="nome" optionValue="id"></p-dropdown>
-                    </div>
+                <div>
+                    <p-dropdown class="p-dropdown-item" [options]="formasPagamento" appendTo="body"
+                        id="formaPagamentoId" formControlName="formaPagamentoId"
+                        placeholder="Selecione uma forma de pagamento" optionLabel="nome" optionValue="id"
+                        [ngClass]="{ 'ng-invalid ng-dirty': displayMessage['formaPagamentoId'] }"></p-dropdown>
+                    <small class="p-error block" *ngIf="displayMessage['formaPagamentoId']">
+                        <p class="p-error block" [innerHTML]="displayMessage['formaPagamentoId']"></p>
+                    </small>
                 </div>
             </div>
         </div>
         <div class="row">
-            <!-- <div class="field col-2">
-                <label for="valor">Valor</label>
-                <p-inputNumber formControlName="valor" inputId="valor" [min]="0" [maxFractionDigits]="2"
-                    mode="decimal"></p-inputNumber>
-            </div> -->
+
             <div class="field col-3">
                 <label for="dataInclusao">Data</label>
-                <p-calendar id="realizado" dateFormat="dd/mm/yy" [showIcon]="true"
+                <p-calendar id="dataInclusao" dateFormat="dd/mm/yy" [showIcon]="true"
                     formControlName="dataInclusao"></p-calendar>
+                <small class="p-error block" *ngIf="displayMessage['dataInclusao']">
+                    <p class="p-error block" [innerHTML]="displayMessage['dataInclusao']"></p>
+                </small>
             </div>
             <div class="field col-3">
                 <label for="despesa">Despesa?</label>
@@ -76,7 +79,8 @@
                     formControlName="rateado"></p-dropdown>
             </div>
         </div>
-        <button pButton type="submit" label="Gravar" icon="pi pi-check" class="p-button-success botao-acao"></button>
+        <button pButton type="submit" label="Gravar" icon="pi pi-check" class="p-button-success botao-acao"
+            [disabled]="!lancamentoForm.valid"></button>
         <button pButton type="button" label="Voltar" icon="pi pi-arrow-left" class="p-button-info botao-acao"
             [routerLink]="['/lancamentos']"></button>
     </form>

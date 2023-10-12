@@ -16,10 +16,11 @@ export class ListaComponent implements OnInit {
     lancamentosAgrupados = new Map<number, Lancamento[]>();
     mesAtual: number = new Date().getMonth();
 
-    constructor(private router: Router, private lancamentoService: LancamentoService){
+    constructor(private router: Router, private lancamentoService: LancamentoService, private ngxService: NgxUiLoaderService){
 
     }
     ngOnInit(): void {
+        this.ngxService.start()
         this.atualizarLancamentos();
     }
 
@@ -30,7 +31,8 @@ export class ListaComponent implements OnInit {
                 this.lancamentosAgrupados = this.filtrarEagruparPorMes(retorno, 2023);
                 //this.lancamentosAgrupados.get(8);
                 //console.log(lancamentosAgrupados);
-            }
+            },
+            complete:() => { this.ngxService.stop() }
         });
     }
 
