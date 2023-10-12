@@ -6,11 +6,9 @@ import { Observable, fromEvent, merge } from 'rxjs';
 import { GenericValidator, DisplayMessage, ValidationMessages } from '../utils/generic-form-validation';
 
 export abstract class FormBaseComponent {
-
     displayMessage: DisplayMessage = {};
     genericValidator!: GenericValidator;
     validationMessages!: ValidationMessages;
-
     mudancasNaoSalvas = false;
 
     protected configurarMensagensValidacaoBase(validationMessages: ValidationMessages) {

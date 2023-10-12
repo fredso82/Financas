@@ -29,11 +29,16 @@
 
         <div class="row">
             <div class="field col-6">
-                <label for="categoriaId">Categoria <span class="obrigatorio">*</span></label>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                    <label for="categoriaId">Categoria <span class="obrigatorio">*</span></label>
+                    <button pButton type="button" icon="pi pi-plus" iconPos="left" label="novo" class="p-button-text"
+                        style="width: auto; padding: 0; margin-right: 10px;" scrollHeight="800px"
+                        (click)="modalInclusaoCategoria=true"></button>
+                </div>
                 <div>
                     <p-dropdown class="p-dropdown-item w-full" [options]="categorias" appendTo="body" id="categoriaId"
                         formControlName="categoriaId" placeholder="Selecione uma categoria" optionLabel="nome"
-                        optionValue="id" (blur)="teste()"
+                        optionValue="id"
                         [ngClass]="{ 'ng-invalid ng-dirty': displayMessage['categoriaId'] }"></p-dropdown>
                     <small class="p-error block" *ngIf="displayMessage['categoriaId']">
                         <p class="p-error block" [innerHTML]="displayMessage['categoriaId']"></p>
@@ -41,7 +46,12 @@
                 </div>
             </div>
             <div class="field col-6">
-                <label for="formaPagamentoId">Forma de Pagamento <span class="obrigatorio">*</span></label>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                    <label for="formaPagamentoId">Forma de Pagamento <span class="obrigatorio">*</span></label>
+                    <button pButton type="button" icon="pi pi-plus" iconPos="left" label="novo" class="p-button-text"
+                        style="width: auto; padding: 0; margin-right: 10px;" scrollHeight="800px"
+                        (click)="modalInclusaoFormaPagamento=true"></button>
+                </div>
                 <div>
                     <p-dropdown class="p-dropdown-item" [options]="formasPagamento" appendTo="body"
                         id="formaPagamentoId" formControlName="formaPagamentoId"
@@ -85,3 +95,29 @@
             [routerLink]="['/lancamentos']"></button>
     </form>
 </p-card>
+
+<p-dialog [(visible)]="modalInclusaoCategoria" [style]="{ width: '450px' }" header="Nova Categoria" [modal]="true"
+    class="p-fluid">
+    <ng-template pTemplate="content">
+        <app-categoria-novo (onSave)="processarInclusaoCategoria($event)"></app-categoria-novo>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Fechar" icon="pi pi-times" class="p-button-text"
+            (click)="hideDialogCategoria()"></button>
+        <button pButton pRipple label="Gravar" icon="pi pi-check" class="p-button-text"
+            (click)="categoriaInclusao.gravar()"></button>
+    </ng-template>
+</p-dialog>
+
+<p-dialog [(visible)]="modalInclusaoFormaPagamento" [style]="{ width: '450px' }" header="Nova Forma de Pagamento"
+    [modal]="true" class="p-fluid">
+    <ng-template pTemplate="content">
+        <app-forma-pagamento-novo (onSave)="processarInclusaoFormaPagamento($event)"></app-forma-pagamento-novo>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Fechar" icon="pi pi-times" class="p-button-text"
+            (click)="hideDialogFormaPagamento()"></button>
+        <button pButton pRipple label="Gravar" icon="pi pi-check" class="p-button-text"
+            (click)="formaPagamentoInclusao.gravar()"></button>
+    </ng-template>
+</p-dialog>

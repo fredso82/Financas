@@ -9,6 +9,8 @@ import { FormaPagamentoService } from '../forma-pagamento/forma-pagamento.servic
 import { MessageService } from 'primeng/api';
 import { CategoriaService } from '../categoria/categoria.service';
 import { ListaMesComponent } from './lista-mes/lista-mes.component';
+import { CategoriaModule } from '../categoria/categoria.module';
+import { FormaPagamentoModule } from '../forma-pagamento/forma-pagamento.module';
 
 
 @NgModule({
@@ -20,7 +22,9 @@ import { ListaMesComponent } from './lista-mes/lista-mes.component';
     imports: [
         CommonModule,
         LancamentoRoutingModule,
-        SharedModule
+        SharedModule,
+        CategoriaModule,
+        FormaPagamentoModule
     ],
     providers: [
         FormaPagamentoService,

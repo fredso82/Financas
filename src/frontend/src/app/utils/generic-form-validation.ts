@@ -1,5 +1,12 @@
 import { FormGroup } from '@angular/forms';
 
+export interface DisplayMessage {
+    [key: string]: string
+}
+export interface ValidationMessages {
+    [key: string]: { [key: string]: string } 
+}
+
 export class GenericValidator {
     constructor(private validationMessages: ValidationMessages) { }
 
@@ -31,9 +38,4 @@ export class GenericValidator {
     }
 }
 
-export interface DisplayMessage {
-    [key: string]: string
-}
-export interface ValidationMessages {
-    [key: string]: { [key: string]: string } 
-}
+

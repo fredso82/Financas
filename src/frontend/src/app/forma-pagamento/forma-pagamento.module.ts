@@ -19,6 +19,7 @@ import { AlteracaoFormaPagamentoComponent } from './alteracao/alteracao.componen
     SharedModule,
     FormaPagamentoRoutingModule
   ],
+  exports: [NovaFormaPagamentoComponent],
   providers: [
     FormaPagamentoService,
     MessageService

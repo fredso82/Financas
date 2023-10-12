@@ -18,6 +18,7 @@ import { MessageService } from 'primeng/api';
     SharedModule,
     CategoriaRoutingModule    
   ],
+  exports: [NovaCategoriaComponent],
   providers: [
     CategoriaService,
     MessageService
