@@ -68,6 +68,12 @@ export class ListaComponent implements OnInit {
         return lancamentosAgrupadosPorMes;
     }
 
+    
+    obterRealizadoNoMes(mes: number, realizado: boolean): Lancamento[]{
+        const retorno = this.lancamentosAgrupados.get(mes)?.filter(l => { return l.realizado === realizado});
+        return retorno!;
+    }
+
     @HostListener('document:keydown', ['$event'])
     handleKeyDown(event: KeyboardEvent): void {
         const targetElement = event.target as HTMLElement;

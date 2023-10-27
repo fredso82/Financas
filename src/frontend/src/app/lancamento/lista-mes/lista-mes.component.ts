@@ -8,4 +8,11 @@ import { Lancamento } from '../models/lancamento';
 })
 export class ListaMesComponent {
     @Input() lancamentos: Lancamento[] = []; 
+
+    get total() {
+        if (!this.lancamentos)
+            return "";
+
+        return this.lancamentos.reduce((total, lancamento) => total + lancamento.valor, 0);
+    }
 }
