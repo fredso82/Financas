@@ -18,8 +18,20 @@ export class LancamentoService extends BaseService {
             );
     }
 
+    obterPorId(id: number): Observable<Lancamento> {
+        return this.http.get<Lancamento>(this.UrlService + "transacoes/" + id)
+            .pipe(first());
+    }
+
     incluir(lancamento: Lancamento): Observable<Lancamento> {
         return this.http.post<Lancamento>(this.UrlService + "transacoes", lancamento)
+            .pipe(
+                first()
+            );
+    }
+
+    alterar(lancamento: Lancamento): Observable<Lancamento> {
+        return this.http.put<Lancamento>(this.UrlService + "transacoes/" + lancamento.id!, lancamento)
             .pipe(
                 first()
             );

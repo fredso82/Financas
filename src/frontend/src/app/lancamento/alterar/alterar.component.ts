@@ -1,48 +1,51 @@
 import { Component, ElementRef, OnInit, ViewChild, ViewChildren } from '@angular/core';
 import { FormControlName, NonNullableFormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { MessageService } from 'primeng/api';
-import { FormBaseComponent } from 'src/app/base-components/form-base.component';
 import { CategoriaService } from 'src/app/categoria/categoria.service';
-import { Categoria } from 'src/app/categoria/models/categoria';
 import { FormaPagamentoService } from 'src/app/forma-pagamento/forma-pagamento.service';
-import { FormaPagamento } from 'src/app/forma-pagamento/models/forma-pagamento';
 
 import { LancamentoService } from '../lancamento.service';
-import { Lancamento, LancamentoInclusao } from '../models/lancamento';
+import { Lancamento } from '../models/lancamento';
+import { Categoria } from 'src/app/categoria/models/categoria';
+import { FormaPagamento } from 'src/app/forma-pagamento/models/forma-pagamento';
+import { FormBaseComponent } from 'src/app/base-components/form-base.component';
 import { NovaCategoriaComponent } from 'src/app/categoria/novo/novo.component';
 import { NovaFormaPagamentoComponent } from 'src/app/forma-pagamento/novo/novo.component';
 
 @Component({
-    selector: 'app-novo',
-    templateUrl: './novo.component.html',
-    styleUrls: ['./novo.component.scss']
+    selector: 'app-alterar',
+    templateUrl: './alterar.component.html',
+    styleUrls: ['./alterar.component.scss']
 })
-export class NovoLancamentoComponent extends FormBaseComponent implements OnInit {
+export class AlterarLancamentoComponent extends FormBaseComponent implements OnInit {
     @ViewChildren(FormControlName, { read: ElementRef }) formInputElements!: ElementRef[];
     @ViewChild(NovaCategoriaComponent) categoriaInclusao!: NovaCategoriaComponent;
     @ViewChild(NovaFormaPagamentoComponent) formaPagamentoInclusao!: NovaFormaPagamentoComponent;
-
+    
+    lancamento: Lancamento = new Lancamento();
     modalInclusaoCategoria = false;
     modalInclusaoFormaPagamento = false;
-    lancamento: Partial<LancamentoInclusao> = new LancamentoInclusao();
     categorias?: Categoria[];
     formasPagamento?: FormaPagamento[];
 
     lancamentoForm = this.fb.group({
-        valor: [, [Validators.required, Validators.min(0.01)]],
+        valor: [0, [Validators.required, Validators.min(0.01)]],
         nome: ['', [Validators.required]],
         descricao: ['', []],
         despesa: ['Sim', [Validators.required]],
         realizado: ['Sim', [Validators.required]],
         dataInclusao: [new Date(), [Validators.required]],
         rateado: ['Não', [Validators.required]],
-        categoriaId: [, [Validators.required]],
-        formaPagamentoId: [, [Validators.required]]
+        categoriaId: ['', [Validators.required]],
+        formaPagamentoId: ['', [Validators.required]]
     });
+    
 
-    constructor(private fb: NonNullableFormBuilder, private messageService: MessageService, private categoriaService: CategoriaService, 
-        private formaPagamentoService: FormaPagamentoService, private lancamentoService: LancamentoService, private ngxService: NgxUiLoaderService) {
+    constructor(private fb: NonNullableFormBuilder, private messageService: MessageService, private lancamentoService: LancamentoService,
+        private categoriaService: CategoriaService, private formaPagamentoService: FormaPagamentoService, private route: ActivatedRoute,
+        private ngxService: NgxUiLoaderService, private router: Router) {
 
         super();
 
@@ -57,9 +60,32 @@ export class NovoLancamentoComponent extends FormBaseComponent implements OnInit
             formaPagamentoId: { required: "Informe a forma de pagamento" }
         };
 
+        this.lancamento = this.route.snapshot.data["lancamento"];
+        const dataInclusao = new Date(this.lancamento.dataInclusao);
+
+        this.lancamentoForm.setValue({
+            nome: this.lancamento.nome,
+            descricao: this.lancamento.descricao!,
+            valor: this.lancamento.valor,
+            despesa: this.lancamento.despesa === true ? "Sim" : "Não",
+            realizado: this.lancamento.realizado === true ? "Sim" : "Não",
+            dataInclusao: dataInclusao,
+            rateado: this.lancamento.rateado === true ? "Sim" : "Não",
+            categoriaId: this.lancamento.categoria?.id as string,
+            formaPagamentoId: this.lancamento.formaPagamento?.id as string
+        });
+
+
         super.configurarMensagensValidacaoBase(this.validationMessages);
         this.atualizarCategorias();
         this.atualizarFormasPagamento();
+    }
+    
+    ngOnInit(): void {
+    }
+
+    ngAfterViewInit(): void {
+        super.configurarValidacaoFormularioBase(this.formInputElements, this.lancamentoForm);
     }
 
     atualizarCategorias() {
@@ -74,13 +100,6 @@ export class NovoLancamentoComponent extends FormBaseComponent implements OnInit
         this.formaPagamentoService.obterTodos().subscribe({
             next: (response) => this.formasPagamento = response.sort((f1, f2) => (f1.nome > f2.nome) ? 1 : -1)
         });
-    }
-
-    ngOnInit(): void {
-    }
-
-    ngAfterViewInit(): void {
-        super.configurarValidacaoFormularioBase(this.formInputElements, this.lancamentoForm);
     }
 
     hideDialogCategoria() { 
@@ -108,25 +127,25 @@ export class NovoLancamentoComponent extends FormBaseComponent implements OnInit
     }
 
     gravar() {
-        this.lancamento = this.lancamentoForm.value;
+        this.lancamento.nome = this.lancamentoForm.value.nome!;
+        this.lancamento.descricao = this.lancamentoForm.value.descricao;
+        this.lancamento.valor = this.lancamentoForm.value.valor as number;
+        this.lancamento.despesa = this.lancamentoForm.value.despesa === "Sim";
+        this.lancamento.realizado = this.lancamentoForm.value.realizado === "Sim";
+        this.lancamento.dataInclusao = this.lancamentoForm.value.dataInclusao!;
+        this.lancamento.rateado = this.lancamentoForm.value.rateado === "Sim";
+        this.lancamento.categoriaId = this.lancamentoForm.value.categoriaId;
+        this.lancamento.formaPagamentoId = this.lancamentoForm.value.formaPagamentoId;
 
-        let lancamentoIncluir = new Lancamento();
-        lancamentoIncluir.nome = this.lancamentoForm.value.nome as string;
-        lancamentoIncluir.descricao = this.lancamento.descricao;
-        lancamentoIncluir.valor = this.lancamento.valor as number;
-        lancamentoIncluir.despesa = this.lancamento.despesa === "Sim";
-        lancamentoIncluir.realizado = this.lancamento.realizado === "Sim";
-        lancamentoIncluir.dataInclusao = this.lancamento.dataInclusao as Date;
-        lancamentoIncluir.rateado = this.lancamento.rateado === "Sim";
-        lancamentoIncluir.categoriaId = this.lancamento.categoriaId;
-        lancamentoIncluir.formaPagamentoId = this.lancamento.formaPagamentoId;
+        this.ngxService.start();
 
-        this.ngxService.start()
-
-        this.lancamentoService.incluir(lancamentoIncluir).subscribe({
+        this.lancamentoService.alterar(this.lancamento).subscribe({
             next: (response) => {
-                this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Lançamento registrado com sucesso!', life: 3000 });
-                this.lancamentoForm.reset();
+                this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Lançamento alterado com sucesso!', life: 3000 });
+                setTimeout(() => {
+                    this.router.navigate(['/lancamentos']);
+                }, 1000);
+                
             },
             complete: () => { this.ngxService.stop() },
             error: (e) => {

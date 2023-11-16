@@ -17,7 +17,7 @@ export abstract class FormBaseComponent {
 
     protected configurarValidacaoFormularioBase(formInputElements: ElementRef[], formGroup: FormGroup) {
         let controlBlurs: Observable<any>[] = formInputElements
-            .map((formControl: ElementRef) => fromEvent(formControl.nativeElement, 'focusout'));
+            .map((formControl: ElementRef) => fromEvent(formControl.nativeElement, 'blur'));
 
         merge(...controlBlurs).subscribe(() => {
             this.validarFormulario(formGroup)

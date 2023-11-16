@@ -11,13 +11,15 @@ import { CategoriaService } from '../categoria/categoria.service';
 import { ListaMesComponent } from './lista-mes/lista-mes.component';
 import { CategoriaModule } from '../categoria/categoria.module';
 import { FormaPagamentoModule } from '../forma-pagamento/forma-pagamento.module';
+import { AlterarLancamentoComponent } from './alterar/alterar.component';
 
 
 @NgModule({
     declarations: [
         ListaComponent,
         NovoLancamentoComponent,
-        ListaMesComponent
+        ListaMesComponent,
+        AlterarLancamentoComponent
     ],
     imports: [
         CommonModule,

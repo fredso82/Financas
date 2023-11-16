@@ -8,6 +8,7 @@
             <th>Forma de Pagamento</th>
             <th>Categoria</th>
             <th>Valor</th>
+            <th style="width: 10px;"></th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-lancamento>
@@ -18,6 +19,7 @@
             <td>{{lancamento.formaPagamento.nome}}</td>
             <td>{{lancamento.categoria.nome}}</td>
             <td>{{lancamento.valor | currency: 'BRL'}}</td>
+            <td><button pButton pRipple icon="pi pi-pencil" class="p-button-rounded mr-2" pTooltip="Alterar" (click)="alterar(lancamento.id)"></button></td>
         </tr>
     </ng-template>
     <ng-template pTemplate="footer">
@@ -25,6 +27,7 @@
             <td colspan="5">T O T A L</td>
             
             <td>{{total | currency: 'BRL'}}</td>
+            <td></td>
         </tr>
     </ng-template>
 </p-table>
