@@ -8,7 +8,7 @@
             <th>Forma de Pagamento</th>
             <th>Categoria</th>
             <th>Valor</th>
-            <th style="width: 10px;"></th>
+            <th style="width: 140px; text-align: center;"></th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-lancamento>
@@ -19,7 +19,10 @@
             <td>{{lancamento.formaPagamento.nome}}</td>
             <td>{{lancamento.categoria.nome}}</td>
             <td>{{lancamento.valor | currency: 'BRL'}}</td>
-            <td><button pButton pRipple icon="pi pi-pencil" class="p-button-rounded mr-2" pTooltip="Alterar" (click)="alterar(lancamento.id)"></button></td>
+            <td>
+                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded mr-2" pTooltip="Alterar" (click)="alterar(lancamento.id)"></button>
+                <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-warning" pTooltip="Excluir" (click)="excluir(lancamento)"></p-button>
+            </td>
         </tr>
     </ng-template>
     <ng-template pTemplate="footer">
