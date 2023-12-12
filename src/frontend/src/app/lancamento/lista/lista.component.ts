@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, EventEmitter, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { FormaPagamentoService } from 'src/app/forma-pagamento/forma-pagamento.service';
@@ -7,6 +7,7 @@ import { Lancamento } from '../models/lancamento';
 import { LancamentoService } from '../lancamento.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { MessageService } from 'primeng/api';
 
 @Component({
     selector: 'app-lista',
@@ -14,14 +15,17 @@ import { environment } from 'src/environments/environment';
     styleUrls: ['./lista.component.css']
 })
 export class ListaComponent implements OnInit {
+
     lancamentos: Lancamento[] = [];
     lancamentosAgrupados = new Map<number, Lancamento[]>();
     mesAtual: number = new Date().getMonth();
     urlService: string = environment.apiUrl;
+    modalExclusao: boolean = false;
+    lancamento: Lancamento = new Lancamento();
 
-    constructor(private http: HttpClient, private router: Router, private lancamentoService: LancamentoService, private ngxService: NgxUiLoaderService) {
-
+    constructor(private http: HttpClient, private router: Router, private lancamentoService: LancamentoService, private ngxService: NgxUiLoaderService, private messageService: MessageService) {
     }
+
     ngOnInit(): void {
         this.ngxService.start()
         this.atualizarLancamentos();
@@ -84,5 +88,22 @@ export class ListaComponent implements OnInit {
         if (event.altKey && event.key === 'n') {
             this.router.navigate(['/lancamentos/novo'])
         }
+    }
+
+    excluir(lancamento: Lancamento) {
+        this.lancamento = lancamento;
+        this.modalExclusao = true;
+    }
+
+    confirmarExclusao() {
+        this.modalExclusao = false;
+        this.ngxService.start()
+        this.lancamentoService.excluir(this.lancamento.id!).subscribe({
+            next: () => {
+                this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Lançamento excluído com sucesso!', life: 3000 });
+                this.atualizarLancamentos();
+            }
+        });
+
     }
 }
