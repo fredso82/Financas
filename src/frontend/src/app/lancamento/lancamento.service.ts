@@ -36,4 +36,11 @@ export class LancamentoService extends BaseService {
                 first()
             );
     }
+
+    excluir(id: string): Observable<Lancamento> {
+        return this.http.delete<Lancamento>(this.UrlService + "transacoes/" + id)
+            .pipe(
+                first()
+            );
+    }
 }
