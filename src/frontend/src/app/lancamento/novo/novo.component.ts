@@ -32,7 +32,8 @@ import { ToastModule } from 'primeng/toast';
     templateUrl: './novo.component.html',
     styleUrls: ['./novo.component.scss'],
     standalone: true,
-    imports: [NgxUiLoaderModule, ToastModule, CardModule, FormsModule, FocusTrapModule, ReactiveFormsModule, InputNumberModule, AutoFocusModule, NgClass, NgIf, InputTextModule, ButtonModule, DropdownModule, CalendarModule, RouterLink, DialogModule, SharedModule, NovaCategoriaComponent_1, NovaFormaPagamentoComponent_1]
+    imports: [NgxUiLoaderModule, ToastModule, CardModule, FormsModule, FocusTrapModule, ReactiveFormsModule, InputNumberModule, AutoFocusModule, NgClass, NgIf, InputTextModule, ButtonModule, DropdownModule, CalendarModule, RouterLink, DialogModule, SharedModule, NovaCategoriaComponent_1, NovaFormaPagamentoComponent_1],
+    providers: [MessageService]
 })
 export class NovoLancamentoComponent extends FormBaseComponent implements OnInit {
     @ViewChildren(FormControlName, { read: ElementRef }) formInputElements!: ElementRef[];
