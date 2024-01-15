@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { LancamentoRoutingModule } from './lancamento-routing.module';
 import { ListaComponent } from './lista/lista.component';
-import { SharedModule } from '../shared/shared.module';
+
 import { NovoLancamentoComponent } from './novo/novo.component';
 import { FormaPagamentoService } from '../forma-pagamento/forma-pagamento.service';
 import { MessageService } from 'primeng/api';
@@ -16,16 +16,15 @@ import { AlterarLancamentoComponent } from './alterar/alterar.component';
 
 @NgModule({
     imports: [
-        CommonModule,
-        LancamentoRoutingModule,
-        SharedModule,
-        CategoriaModule,
-        FormaPagamentoModule,
-        ListaComponent,
-        NovoLancamentoComponent,
-        ListaMesComponent,
-        AlterarLancamentoComponent
-    ],
+    CommonModule,
+    LancamentoRoutingModule,
+    CategoriaModule,
+    FormaPagamentoModule,
+    ListaComponent,
+    NovoLancamentoComponent,
+    ListaMesComponent,
+    AlterarLancamentoComponent
+],
     providers: [
         FormaPagamentoService,
         CategoriaService,
