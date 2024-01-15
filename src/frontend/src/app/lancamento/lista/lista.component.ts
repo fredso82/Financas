@@ -21,7 +21,8 @@ import { ToastModule } from 'primeng/toast';
     templateUrl: './lista.component.html',
     styleUrls: ['./lista.component.css'],
     standalone: true,
-    imports: [NgxUiLoaderModule, ToastModule, ButtonModule, TooltipModule, RouterLink, TabViewModule, ListaMesComponent, DialogModule, NgIf, SharedModule]
+    imports: [NgxUiLoaderModule, ToastModule, ButtonModule, TooltipModule, RouterLink, TabViewModule, ListaMesComponent, DialogModule, NgIf, SharedModule],
+    providers: [MessageService]
 })
 export class ListaComponent implements OnInit {
 

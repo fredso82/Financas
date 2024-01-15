@@ -1,11 +1,11 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
+
+import { AlterarLancamentoComponent } from './alterar/alterar.component';
+import { LancamentoResolver } from './lancamento.resolver';
 import { ListaComponent } from './lista/lista.component';
 import { NovoLancamentoComponent } from './novo/novo.component';
-import { LancamentoResolver } from './lancamento.resolver';
-import { AlterarLancamentoComponent } from './alterar/alterar.component';
 
-const routes: Routes = [
+export const LANCAMENTO_ROUTES: Routes = [
     {
         path: '', 
         component: ListaComponent
@@ -21,9 +21,3 @@ const routes: Routes = [
         resolve: { lancamento: LancamentoResolver }
     }
 ];
-
-@NgModule({
-    imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule]
-})
-export class LancamentoRoutingModule { }
