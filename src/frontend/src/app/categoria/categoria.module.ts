@@ -9,19 +9,17 @@ import { AlteracaoCategoriaComponent } from './alteracao/alteracao.component';
 import { MessageService } from 'primeng/api';
 
 @NgModule({
-  declarations: [
-    ListaComponent,
-    NovaCategoriaComponent,
-    AlteracaoCategoriaComponent
-  ],
-  imports: [
-    SharedModule,
-    CategoriaRoutingModule    
-  ],
-  exports: [NovaCategoriaComponent],
-  providers: [
-    CategoriaService,
-    MessageService
-  ]
+    imports: [
+        SharedModule,
+        CategoriaRoutingModule,
+        ListaComponent,
+        NovaCategoriaComponent,
+        AlteracaoCategoriaComponent
+    ],
+    exports: [NovaCategoriaComponent],
+    providers: [
+        CategoriaService,
+        MessageService
+    ]
 })
 export class CategoriaModule { }

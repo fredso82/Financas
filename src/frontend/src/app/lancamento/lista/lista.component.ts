@@ -1,18 +1,27 @@
 import { Component, EventEmitter, HostListener, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { Router, RouterLink } from '@angular/router';
+import { NgxUiLoaderService, NgxUiLoaderModule } from 'ngx-ui-loader';
 import { FormaPagamentoService } from 'src/app/forma-pagamento/forma-pagamento.service';
 import { FormaPagamento } from 'src/app/forma-pagamento/models/forma-pagamento';
 import { Lancamento } from '../models/lancamento';
 import { LancamentoService } from '../lancamento.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { MessageService } from 'primeng/api';
+import { MessageService, SharedModule } from 'primeng/api';
+import { NgIf } from '@angular/common';
+import { DialogModule } from 'primeng/dialog';
+import { ListaMesComponent } from '../lista-mes/lista-mes.component';
+import { TabViewModule } from 'primeng/tabview';
+import { TooltipModule } from 'primeng/tooltip';
+import { ButtonModule } from 'primeng/button';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
     selector: 'app-lista',
     templateUrl: './lista.component.html',
-    styleUrls: ['./lista.component.css']
+    styleUrls: ['./lista.component.css'],
+    standalone: true,
+    imports: [NgxUiLoaderModule, ToastModule, ButtonModule, TooltipModule, RouterLink, TabViewModule, ListaMesComponent, DialogModule, NgIf, SharedModule]
 })
 export class ListaComponent implements OnInit {
 

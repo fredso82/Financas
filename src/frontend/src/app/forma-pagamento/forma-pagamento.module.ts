@@ -10,19 +10,17 @@ import { AlteracaoFormaPagamentoComponent } from './alteracao/alteracao.componen
 
 
 @NgModule({
-  declarations: [
-    ListaComponent,
-    NovaFormaPagamentoComponent,
-    AlteracaoFormaPagamentoComponent
-  ],
-  imports: [
-    SharedModule,
-    FormaPagamentoRoutingModule
-  ],
-  exports: [NovaFormaPagamentoComponent],
-  providers: [
-    FormaPagamentoService,
-    MessageService
-  ]
+    imports: [
+        SharedModule,
+        FormaPagamentoRoutingModule,
+        ListaComponent,
+        NovaFormaPagamentoComponent,
+        AlteracaoFormaPagamentoComponent
+    ],
+    exports: [NovaFormaPagamentoComponent],
+    providers: [
+        FormaPagamentoService,
+        MessageService
+    ]
 })
 export class FormaPagamentoModule { }

@@ -1,16 +1,24 @@
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { NgxUiLoaderService, NgxUiLoaderModule } from 'ngx-ui-loader';
 
 import { CategoriaService } from '../categoria.service';
 import { Categoria } from '../models/categoria';
 import { NovaCategoriaComponent } from '../novo/novo.component';
 import { AlteracaoCategoriaComponent } from '../alteracao/alteracao.component';
-import { MessageService } from 'primeng/api';
+import { MessageService, SharedModule } from 'primeng/api';
+import { NgIf, NgFor } from '@angular/common';
+import { DialogModule } from 'primeng/dialog';
+import { TableModule } from 'primeng/table';
+import { TooltipModule } from 'primeng/tooltip';
+import { ButtonModule } from 'primeng/button';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
     selector: 'app-lista',
     templateUrl: './lista.component.html',
-    styleUrls: ['./lista.component.css']
+    styleUrls: ['./lista.component.css'],
+    standalone: true,
+    imports: [NgxUiLoaderModule, ToastModule, ButtonModule, TooltipModule, TableModule, SharedModule, DialogModule, NovaCategoriaComponent, AlteracaoCategoriaComponent, NgIf, NgFor]
 })
 export class ListaComponent implements OnInit {
     @ViewChild(NovaCategoriaComponent) categoriaInclusao!: NovaCategoriaComponent;

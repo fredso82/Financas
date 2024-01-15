@@ -3,11 +3,18 @@ import { Router } from '@angular/router';
 
 import { LancamentoService } from '../lancamento.service';
 import { Lancamento } from '../models/lancamento';
+import { ButtonModule } from 'primeng/button';
+import { TooltipModule } from 'primeng/tooltip';
+import { NgIf, CurrencyPipe, DatePipe } from '@angular/common';
+import { SharedModule } from 'primeng/api';
+import { TableModule } from 'primeng/table';
 
 @Component({
     selector: 'app-lista-mes',
     templateUrl: './lista-mes.component.html',
-    styleUrls: ['./lista-mes.component.scss']
+    styleUrls: ['./lista-mes.component.scss'],
+    standalone: true,
+    imports: [TableModule, SharedModule, NgIf, TooltipModule, ButtonModule, CurrencyPipe, DatePipe]
 })
 export class ListaMesComponent {
     @Input() lancamentos: Lancamento[] = [];

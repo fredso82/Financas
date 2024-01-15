@@ -15,18 +15,16 @@ import { AlterarLancamentoComponent } from './alterar/alterar.component';
 
 
 @NgModule({
-    declarations: [
-        ListaComponent,
-        NovoLancamentoComponent,
-        ListaMesComponent,
-        AlterarLancamentoComponent
-    ],
     imports: [
         CommonModule,
         LancamentoRoutingModule,
         SharedModule,
         CategoriaModule,
-        FormaPagamentoModule
+        FormaPagamentoModule,
+        ListaComponent,
+        NovoLancamentoComponent,
+        ListaMesComponent,
+        AlterarLancamentoComponent
     ],
     providers: [
         FormaPagamentoService,
