@@ -5,9 +5,12 @@ import { LancamentoService } from '../lancamento.service';
 import { Lancamento } from '../models/lancamento';
 import { ButtonModule } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
-import { NgIf, CurrencyPipe, DatePipe } from '@angular/common';
+import { NgIf, CurrencyPipe, DatePipe, registerLocaleData } from '@angular/common';
 import { SharedModule } from 'primeng/api';
 import { TableModule } from 'primeng/table';
+import ptBr from '@angular/common/locales/pt';
+
+registerLocaleData(ptBr)
 
 @Component({
     selector: 'app-lista-mes',
