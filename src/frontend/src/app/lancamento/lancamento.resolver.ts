@@ -7,7 +7,7 @@ import { Observable, first, of } from "rxjs";
 @Injectable({
     providedIn: 'root'
 })
-export class LancamentoResolver implements Resolve<Lancamento> {
+export class LancamentoResolver {
     constructor(private lancamentoService: LancamentoService) { }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Lancamento> {
