@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild, ViewChildren } from '@angular/core';
-import { FormControlName, NonNullableFormBuilder, Validators } from '@angular/forms';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
-import { MessageService } from 'primeng/api';
+import { FormControlName, NonNullableFormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxUiLoaderService, NgxUiLoaderModule } from 'ngx-ui-loader';
+import { MessageService, SharedModule } from 'primeng/api';
 import { FormBaseComponent } from 'src/app/base-components/form-base.component';
 import { CategoriaService } from 'src/app/categoria/categoria.service';
 import { Categoria } from 'src/app/categoria/models/categoria';
@@ -12,11 +12,28 @@ import { LancamentoService } from '../lancamento.service';
 import { Lancamento, LancamentoInclusao } from '../models/lancamento';
 import { NovaCategoriaComponent } from 'src/app/categoria/novo/novo.component';
 import { NovaFormaPagamentoComponent } from 'src/app/forma-pagamento/novo/novo.component';
+import { NovaFormaPagamentoComponent as NovaFormaPagamentoComponent_1 } from '../../forma-pagamento/novo/novo.component';
+import { NovaCategoriaComponent as NovaCategoriaComponent_1 } from '../../categoria/novo/novo.component';
+import { DialogModule } from 'primeng/dialog';
+import { RouterLink } from '@angular/router';
+import { CalendarModule } from 'primeng/calendar';
+import { DropdownModule } from 'primeng/dropdown';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { NgClass } from '@angular/common';
+import { AutoFocusModule } from 'primeng/autofocus';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { FocusTrapModule } from 'primeng/focustrap';
+import { CardModule } from 'primeng/card';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
     selector: 'app-novo',
     templateUrl: './novo.component.html',
-    styleUrls: ['./novo.component.scss']
+    styleUrls: ['./novo.component.scss'],
+    standalone: true,
+    imports: [NgxUiLoaderModule, ToastModule, CardModule, FormsModule, FocusTrapModule, ReactiveFormsModule, InputNumberModule, AutoFocusModule, NgClass, InputTextModule, ButtonModule, DropdownModule, CalendarModule, RouterLink, DialogModule, SharedModule, NovaCategoriaComponent_1, NovaFormaPagamentoComponent_1],
+    providers: [MessageService]
 })
 export class NovoLancamentoComponent extends FormBaseComponent implements OnInit {
     @ViewChildren(FormControlName, { read: ElementRef }) formInputElements!: ElementRef[];

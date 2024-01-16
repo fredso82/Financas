@@ -1,20 +1,31 @@
-import { Component, EventEmitter, HostListener, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { Component, EventEmitter, HostListener, OnInit, Signal, signal } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+import { NgxUiLoaderService, NgxUiLoaderModule } from 'ngx-ui-loader';
 import { FormaPagamentoService } from 'src/app/forma-pagamento/forma-pagamento.service';
 import { FormaPagamento } from 'src/app/forma-pagamento/models/forma-pagamento';
 import { Lancamento } from '../models/lancamento';
 import { LancamentoService } from '../lancamento.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { MessageService } from 'primeng/api';
+import { MessageService, SharedModule } from 'primeng/api';
+
+import { DialogModule } from 'primeng/dialog';
+import { ListaMesComponent } from '../lista-mes/lista-mes.component';
+import { TabViewModule } from 'primeng/tabview';
+import { TooltipModule } from 'primeng/tooltip';
+import { ButtonModule } from 'primeng/button';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
     selector: 'app-lista',
     templateUrl: './lista.component.html',
-    styleUrls: ['./lista.component.css']
+    styleUrls: ['./lista.component.css'],
+    standalone: true,
+    imports: [NgxUiLoaderModule, ToastModule, ButtonModule, TooltipModule, RouterLink, TabViewModule, ListaMesComponent, DialogModule, SharedModule],
+    providers: [MessageService]
 })
 export class ListaComponent implements OnInit {
+    ano = signal(new Date().getUTCFullYear());
 
     lancamentos: Lancamento[] = [];
     lancamentosAgrupados = new Map<number, Lancamento[]>();
@@ -35,7 +46,7 @@ export class ListaComponent implements OnInit {
         this.http.get<Lancamento[]>(this.urlService + "transacoes").subscribe({
             next: (retorno) => {
                 this.lancamentos = retorno;
-                this.lancamentosAgrupados = this.filtrarEAgruparPorMes(retorno, 2024);
+                this.lancamentosAgrupados = this.filtrarEAgruparPorMes(retorno, this.ano());
             },
             complete: () => { this.ngxService.stop() }
         }
@@ -105,5 +116,14 @@ export class ListaComponent implements OnInit {
             }
         });
 
+    }
+
+    anoAnterior() {
+        this.ano.update(a => a - 1);
+        this.atualizarLancamentos();
+    }
+    proximoAno() {
+        this.ano.update(a => a + 1);
+        this.atualizarLancamentos();
     }
 }

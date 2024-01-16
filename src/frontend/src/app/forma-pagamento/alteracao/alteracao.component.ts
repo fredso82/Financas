@@ -1,10 +1,19 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormaPagamento } from '../models/forma-pagamento';
 import { FormaPagamentoService } from '../forma-pagamento.service';
+import { NgClass } from '@angular/common';
+import { InputTextModule } from 'primeng/inputtext';
+import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-forma-pagamento-alteracao',
-  templateUrl: './alteracao.component.html',
+    selector: 'app-forma-pagamento-alteracao',
+    templateUrl: './alteracao.component.html',
+    standalone: true,
+    imports: [
+    FormsModule,
+    InputTextModule,
+    NgClass
+],
 })
 export class AlteracaoFormaPagamentoComponent implements OnInit {
     @Output() onSave = new EventEmitter<{ sucesso: boolean, dados: any }>();

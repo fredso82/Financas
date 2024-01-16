@@ -1,10 +1,15 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Categoria } from '../models/categoria';
 import { CategoriaService } from '../categoria.service';
+import { NgClass } from '@angular/common';
+import { InputTextModule } from 'primeng/inputtext';
+import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-categoria-novo',
-    templateUrl: './novo.component.html'
+    templateUrl: './novo.component.html',
+    standalone: true,
+    imports: [FormsModule, InputTextModule, NgClass]
 })
 export class NovaCategoriaComponent implements OnInit {
     @Output() onSave = new EventEmitter<{ sucesso: boolean, dados: any }>();

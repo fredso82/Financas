@@ -6,6 +6,13 @@
         pTooltip="Atalho: Alt + n"></p-button>
 </div>
 
+<div class="controle-ano">
+    <p-button icon="pi pi-minus" styleClass="p-button-rounded" (onClick)="anoAnterior()"></p-button>
+    <p>{{ano()}}</p>
+    <p-button icon="pi pi-plus" styleClass="p-button-rounded" (onClick)="proximoAno()"></p-button>
+</div>
+
+
 <p-tabView [activeIndex]="mesAtual">
     <p-tabPanel header="Janeiro">
         <app-lista-mes [lancamentos]="lancamentosAgrupados.get(1)!" (onDelete)="excluir($event)"></app-lista-mes>
@@ -32,7 +39,7 @@
         <app-lista-mes [lancamentos]="lancamentosAgrupados.get(8)!" (onDelete)="excluir($event)"></app-lista-mes>
     </p-tabPanel>
     <p-tabPanel header="Setembro">
-        <app-lista-mes [lancamentos]="lancamentosAgrupados.get(9)!" (onDelete)="excluir($event)"></app-lista-mes> 
+        <app-lista-mes [lancamentos]="lancamentosAgrupados.get(9)!" (onDelete)="excluir($event)"></app-lista-mes>
     </p-tabPanel>
     <p-tabPanel header="Outubro">
         <app-lista-mes [lancamentos]="lancamentosAgrupados.get(10)!" (onDelete)="excluir($event)"></app-lista-mes>
@@ -49,7 +56,9 @@
 <p-dialog [(visible)]="modalExclusao" header="Atenção!" [modal]="true" [style]="{ width: '450px' }">
     <div class="flex align-items-center justify-content-center">
         <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem; margin-right: 10px;"></i>
-        <span *ngIf="lancamento">Confirma a exclusão do lançamento<b> {{ lancamento.nome }}</b>?</span>
+        @if (lancamento) {
+        <span>Confirma a exclusão do lançamento<b> {{ lancamento.nome }}</b>?</span>
+        }
     </div>
     <ng-template pTemplate="footer">
         <button pButton pRipple icon="pi pi-times" class="p-button-text" label="Não"

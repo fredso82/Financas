@@ -1,7 +1,22 @@
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { importProvidersFrom, LOCALE_ID } from '@angular/core';
+import { bootstrapApplication, BrowserModule } from '@angular/platform-browser';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { PreloadAllModules, provideRouter, withPreloading } from '@angular/router';
+import { TabMenuModule } from 'primeng/tabmenu';
 
-import { AppModule } from './app/app.module';
+import { AppComponent } from './app/app.component';
+import { APP_ROUTES } from './app/app.routes';
 
 
-platformBrowserDynamic().bootstrapModule(AppModule)
+
+bootstrapApplication(AppComponent, {
+    providers: [
+        importProvidersFrom(BrowserModule, TabMenuModule),
+        { provide: LOCALE_ID, useValue: "pt" },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideAnimations(),
+        provideRouter(APP_ROUTES, withPreloading(PreloadAllModules))
+    ]
+})
   .catch(err => console.error(err));

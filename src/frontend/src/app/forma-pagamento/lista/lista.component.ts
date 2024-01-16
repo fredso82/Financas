@@ -1,15 +1,24 @@
 import { Component, HostListener, ViewChild } from '@angular/core';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { NgxUiLoaderService, NgxUiLoaderModule } from 'ngx-ui-loader';
 import { FormaPagamentoService } from 'src/app/forma-pagamento/forma-pagamento.service';
 import { FormaPagamento } from 'src/app/forma-pagamento/models/forma-pagamento';
 import { NovaFormaPagamentoComponent } from '../novo/novo.component';
-import { MessageService } from 'primeng/api';
+import { MessageService, SharedModule } from 'primeng/api';
 import { AlteracaoFormaPagamentoComponent } from '../alteracao/alteracao.component';
 
+import { DialogModule } from 'primeng/dialog';
+import { TableModule } from 'primeng/table';
+import { TooltipModule } from 'primeng/tooltip';
+import { ButtonModule } from 'primeng/button';
+import { ToastModule } from 'primeng/toast';
+
 @Component({
-  selector: 'app-lista',
-  templateUrl: './lista.component.html',
-  styleUrls: ['./lista.component.css']
+    selector: 'app-lista',
+    templateUrl: './lista.component.html',
+    styleUrls: ['./lista.component.css'],
+    standalone: true,
+    imports: [NgxUiLoaderModule, ToastModule, ButtonModule, TooltipModule, TableModule, SharedModule, DialogModule, NovaFormaPagamentoComponent, AlteracaoFormaPagamentoComponent],
+    providers: [MessageService]
 })
 export class ListaComponent {
     @ViewChild(NovaFormaPagamentoComponent) formaPagamentoInclusao!: NovaFormaPagamentoComponent;

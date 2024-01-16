@@ -1,10 +1,14 @@
 import { Component } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { PrimeNGConfig } from 'primeng/api';
+import { RouterOutlet } from '@angular/router';
+import { TabMenuModule } from 'primeng/tabmenu';
 
 @Component({
     selector: 'app-root',
-    templateUrl: './app.component.html'
+    templateUrl: './app.component.html',
+    standalone: true,
+    imports: [TabMenuModule, RouterOutlet]
 })
 export class AppComponent {
     title = 'financas';
