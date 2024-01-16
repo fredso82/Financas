@@ -1,4 +1,4 @@
-import { Component, EventEmitter, HostListener, OnInit } from '@angular/core';
+import { Component, EventEmitter, HostListener, OnInit, Signal, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { NgxUiLoaderService, NgxUiLoaderModule } from 'ngx-ui-loader';
 import { FormaPagamentoService } from 'src/app/forma-pagamento/forma-pagamento.service';
@@ -25,6 +25,7 @@ import { ToastModule } from 'primeng/toast';
     providers: [MessageService]
 })
 export class ListaComponent implements OnInit {
+    ano = signal(new Date().getUTCFullYear());
 
     lancamentos: Lancamento[] = [];
     lancamentosAgrupados = new Map<number, Lancamento[]>();
@@ -45,7 +46,7 @@ export class ListaComponent implements OnInit {
         this.http.get<Lancamento[]>(this.urlService + "transacoes").subscribe({
             next: (retorno) => {
                 this.lancamentos = retorno;
-                this.lancamentosAgrupados = this.filtrarEAgruparPorMes(retorno, 2024);
+                this.lancamentosAgrupados = this.filtrarEAgruparPorMes(retorno, this.ano());
             },
             complete: () => { this.ngxService.stop() }
         }
@@ -115,5 +116,14 @@ export class ListaComponent implements OnInit {
             }
         });
 
+    }
+
+    anoAnterior() {
+        this.ano.update(a => a - 1);
+        this.atualizarLancamentos();
+    }
+    proximoAno() {
+        this.ano.update(a => a + 1);
+        this.atualizarLancamentos();
     }
 }

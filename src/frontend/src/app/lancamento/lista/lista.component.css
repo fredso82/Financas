@@ -10,3 +10,17 @@
     }
 }
 
+.controle-ano {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+
+    p {
+        margin-left: 10px;
+        margin-right: 10px;
+        font-weight: bolder;
+        font-size: 1.2rem;
+    }
+}
+

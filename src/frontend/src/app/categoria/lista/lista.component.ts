@@ -18,7 +18,8 @@ import { ToastModule } from 'primeng/toast';
     templateUrl: './lista.component.html',
     styleUrls: ['./lista.component.css'],
     standalone: true,
-    imports: [NgxUiLoaderModule, ToastModule, ButtonModule, TooltipModule, TableModule, SharedModule, DialogModule, NovaCategoriaComponent, AlteracaoCategoriaComponent]
+    imports: [NgxUiLoaderModule, ToastModule, ButtonModule, TooltipModule, TableModule, SharedModule, DialogModule, NovaCategoriaComponent, AlteracaoCategoriaComponent],
+    providers: [MessageService]
 })
 export class ListaComponent implements OnInit {
     @ViewChild(NovaCategoriaComponent) categoriaInclusao!: NovaCategoriaComponent;

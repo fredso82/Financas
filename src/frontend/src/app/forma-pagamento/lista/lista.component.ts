@@ -17,7 +17,8 @@ import { ToastModule } from 'primeng/toast';
     templateUrl: './lista.component.html',
     styleUrls: ['./lista.component.css'],
     standalone: true,
-    imports: [NgxUiLoaderModule, ToastModule, ButtonModule, TooltipModule, TableModule, SharedModule, DialogModule, NovaFormaPagamentoComponent, AlteracaoFormaPagamentoComponent]
+    imports: [NgxUiLoaderModule, ToastModule, ButtonModule, TooltipModule, TableModule, SharedModule, DialogModule, NovaFormaPagamentoComponent, AlteracaoFormaPagamentoComponent],
+    providers: [MessageService]
 })
 export class ListaComponent {
     @ViewChild(NovaFormaPagamentoComponent) formaPagamentoInclusao!: NovaFormaPagamentoComponent;
