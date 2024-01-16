@@ -27,7 +27,7 @@ import { ToastModule } from 'primeng/toast';
 export class ListaComponent implements OnInit {
     ano = signal(new Date().getUTCFullYear());
 
-    lancamentos: Lancamento[] = [];
+    lancamentos = signal(new Array<Lancamento>());
     lancamentosAgrupados = new Map<number, Lancamento[]>();
     mesAtual: number = new Date().getMonth();
     urlService: string = environment.apiUrl;
@@ -45,7 +45,7 @@ export class ListaComponent implements OnInit {
     atualizarLancamentos() {
         this.http.get<Lancamento[]>(this.urlService + "transacoes").subscribe({
             next: (retorno) => {
-                this.lancamentos = retorno;
+                this.lancamentos.set(retorno);
                 this.lancamentosAgrupados = this.filtrarEAgruparPorMes(retorno, this.ano());
             },
             complete: () => { this.ngxService.stop() }
