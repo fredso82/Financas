@@ -6,7 +6,7 @@ import { Categoria } from '../models/categoria';
 import { NovaCategoriaComponent } from '../novo/novo.component';
 import { AlteracaoCategoriaComponent } from '../alteracao/alteracao.component';
 import { MessageService, SharedModule } from 'primeng/api';
-import { NgIf, NgFor } from '@angular/common';
+
 import { DialogModule } from 'primeng/dialog';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
@@ -18,7 +18,7 @@ import { ToastModule } from 'primeng/toast';
     templateUrl: './lista.component.html',
     styleUrls: ['./lista.component.css'],
     standalone: true,
-    imports: [NgxUiLoaderModule, ToastModule, ButtonModule, TooltipModule, TableModule, SharedModule, DialogModule, NovaCategoriaComponent, AlteracaoCategoriaComponent, NgIf, NgFor]
+    imports: [NgxUiLoaderModule, ToastModule, ButtonModule, TooltipModule, TableModule, SharedModule, DialogModule, NovaCategoriaComponent, AlteracaoCategoriaComponent]
 })
 export class ListaComponent implements OnInit {
     @ViewChild(NovaCategoriaComponent) categoriaInclusao!: NovaCategoriaComponent;

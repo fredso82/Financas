@@ -2,59 +2,61 @@
 <p-toast position="top-center"></p-toast>
 
 <div class="buttonAdd">
-    <p-button icon="pi pi-plus" styleClass="p-button-rounded p-button-success" [routerLink]="['/lancamentos/novo']"
-        pTooltip="Atalho: Alt + n"></p-button>
+  <p-button icon="pi pi-plus" styleClass="p-button-rounded p-button-success" [routerLink]="['/lancamentos/novo']"
+  pTooltip="Atalho: Alt + n"></p-button>
 </div>
 
 <p-tabView [activeIndex]="mesAtual">
-    <p-tabPanel header="Janeiro">
-        <app-lista-mes [lancamentos]="lancamentosAgrupados.get(1)!" (onDelete)="excluir($event)"></app-lista-mes>
-    </p-tabPanel>
-    <p-tabPanel header="Fevereiro">
-        <app-lista-mes [lancamentos]="lancamentosAgrupados.get(2)!" (onDelete)="excluir($event)"></app-lista-mes>
-    </p-tabPanel>
-    <p-tabPanel header="Março">
-        <app-lista-mes [lancamentos]="lancamentosAgrupados.get(3)!" (onDelete)="excluir($event)"></app-lista-mes>
-    </p-tabPanel>
-    <p-tabPanel header="Abril">
-        <app-lista-mes [lancamentos]="lancamentosAgrupados.get(4)!" (onDelete)="excluir($event)"></app-lista-mes>
-    </p-tabPanel>
-    <p-tabPanel header="Maio">
-        <app-lista-mes [lancamentos]="lancamentosAgrupados.get(5)!" (onDelete)="excluir($event)"></app-lista-mes>
-    </p-tabPanel>
-    <p-tabPanel header="Junho">
-        <app-lista-mes [lancamentos]="lancamentosAgrupados.get(6)!" (onDelete)="excluir($event)"></app-lista-mes>
-    </p-tabPanel>
-    <p-tabPanel header="Julho">
-        <app-lista-mes [lancamentos]="lancamentosAgrupados.get(7)!" (onDelete)="excluir($event)"></app-lista-mes>
-    </p-tabPanel>
-    <p-tabPanel header="Agosto">
-        <app-lista-mes [lancamentos]="lancamentosAgrupados.get(8)!" (onDelete)="excluir($event)"></app-lista-mes>
-    </p-tabPanel>
-    <p-tabPanel header="Setembro">
-        <app-lista-mes [lancamentos]="lancamentosAgrupados.get(9)!" (onDelete)="excluir($event)"></app-lista-mes> 
-    </p-tabPanel>
-    <p-tabPanel header="Outubro">
-        <app-lista-mes [lancamentos]="lancamentosAgrupados.get(10)!" (onDelete)="excluir($event)"></app-lista-mes>
-    </p-tabPanel>
-    <p-tabPanel header="Novembro">
-        <app-lista-mes [lancamentos]="lancamentosAgrupados.get(11)!" (onDelete)="excluir($event)"></app-lista-mes>
-    </p-tabPanel>
-    <p-tabPanel header="Dezembro">
-        <app-lista-mes [lancamentos]="lancamentosAgrupados.get(12)!" (onDelete)="excluir($event)"></app-lista-mes>
-    </p-tabPanel>
+  <p-tabPanel header="Janeiro">
+    <app-lista-mes [lancamentos]="lancamentosAgrupados.get(1)!" (onDelete)="excluir($event)"></app-lista-mes>
+  </p-tabPanel>
+  <p-tabPanel header="Fevereiro">
+    <app-lista-mes [lancamentos]="lancamentosAgrupados.get(2)!" (onDelete)="excluir($event)"></app-lista-mes>
+  </p-tabPanel>
+  <p-tabPanel header="Março">
+    <app-lista-mes [lancamentos]="lancamentosAgrupados.get(3)!" (onDelete)="excluir($event)"></app-lista-mes>
+  </p-tabPanel>
+  <p-tabPanel header="Abril">
+    <app-lista-mes [lancamentos]="lancamentosAgrupados.get(4)!" (onDelete)="excluir($event)"></app-lista-mes>
+  </p-tabPanel>
+  <p-tabPanel header="Maio">
+    <app-lista-mes [lancamentos]="lancamentosAgrupados.get(5)!" (onDelete)="excluir($event)"></app-lista-mes>
+  </p-tabPanel>
+  <p-tabPanel header="Junho">
+    <app-lista-mes [lancamentos]="lancamentosAgrupados.get(6)!" (onDelete)="excluir($event)"></app-lista-mes>
+  </p-tabPanel>
+  <p-tabPanel header="Julho">
+    <app-lista-mes [lancamentos]="lancamentosAgrupados.get(7)!" (onDelete)="excluir($event)"></app-lista-mes>
+  </p-tabPanel>
+  <p-tabPanel header="Agosto">
+    <app-lista-mes [lancamentos]="lancamentosAgrupados.get(8)!" (onDelete)="excluir($event)"></app-lista-mes>
+  </p-tabPanel>
+  <p-tabPanel header="Setembro">
+    <app-lista-mes [lancamentos]="lancamentosAgrupados.get(9)!" (onDelete)="excluir($event)"></app-lista-mes>
+  </p-tabPanel>
+  <p-tabPanel header="Outubro">
+    <app-lista-mes [lancamentos]="lancamentosAgrupados.get(10)!" (onDelete)="excluir($event)"></app-lista-mes>
+  </p-tabPanel>
+  <p-tabPanel header="Novembro">
+    <app-lista-mes [lancamentos]="lancamentosAgrupados.get(11)!" (onDelete)="excluir($event)"></app-lista-mes>
+  </p-tabPanel>
+  <p-tabPanel header="Dezembro">
+    <app-lista-mes [lancamentos]="lancamentosAgrupados.get(12)!" (onDelete)="excluir($event)"></app-lista-mes>
+  </p-tabPanel>
 
 </p-tabView>
 
 <p-dialog [(visible)]="modalExclusao" header="Atenção!" [modal]="true" [style]="{ width: '450px' }">
-    <div class="flex align-items-center justify-content-center">
-        <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem; margin-right: 10px;"></i>
-        <span *ngIf="lancamento">Confirma a exclusão do lançamento<b> {{ lancamento.nome }}</b>?</span>
-    </div>
-    <ng-template pTemplate="footer">
-        <button pButton pRipple icon="pi pi-times" class="p-button-text" label="Não"
-            (click)="modalExclusao = false"></button>
-        <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Sim"
-            (click)="confirmarExclusao()"></button>
-    </ng-template>
+  <div class="flex align-items-center justify-content-center">
+    <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem; margin-right: 10px;"></i>
+    @if (lancamento) {
+      <span>Confirma a exclusão do lançamento<b> {{ lancamento.nome }}</b>?</span>
+    }
+  </div>
+  <ng-template pTemplate="footer">
+    <button pButton pRipple icon="pi pi-times" class="p-button-text" label="Não"
+    (click)="modalExclusao = false"></button>
+    <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Sim"
+    (click)="confirmarExclusao()"></button>
+  </ng-template>
 </p-dialog>

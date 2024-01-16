@@ -20,7 +20,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
-import { NgClass, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { AutoFocusModule } from 'primeng/autofocus';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { FocusTrapModule } from 'primeng/focustrap';
@@ -32,7 +32,7 @@ import { ToastModule } from 'primeng/toast';
     templateUrl: './novo.component.html',
     styleUrls: ['./novo.component.scss'],
     standalone: true,
-    imports: [NgxUiLoaderModule, ToastModule, CardModule, FormsModule, FocusTrapModule, ReactiveFormsModule, InputNumberModule, AutoFocusModule, NgClass, NgIf, InputTextModule, ButtonModule, DropdownModule, CalendarModule, RouterLink, DialogModule, SharedModule, NovaCategoriaComponent_1, NovaFormaPagamentoComponent_1],
+    imports: [NgxUiLoaderModule, ToastModule, CardModule, FormsModule, FocusTrapModule, ReactiveFormsModule, InputNumberModule, AutoFocusModule, NgClass, InputTextModule, ButtonModule, DropdownModule, CalendarModule, RouterLink, DialogModule, SharedModule, NovaCategoriaComponent_1, NovaFormaPagamentoComponent_1],
     providers: [MessageService]
 })
 export class NovoLancamentoComponent extends FormBaseComponent implements OnInit {

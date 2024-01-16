@@ -5,7 +5,7 @@ import { FormaPagamento } from 'src/app/forma-pagamento/models/forma-pagamento';
 import { NovaFormaPagamentoComponent } from '../novo/novo.component';
 import { MessageService, SharedModule } from 'primeng/api';
 import { AlteracaoFormaPagamentoComponent } from '../alteracao/alteracao.component';
-import { NgIf, NgFor } from '@angular/common';
+
 import { DialogModule } from 'primeng/dialog';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
@@ -17,7 +17,7 @@ import { ToastModule } from 'primeng/toast';
     templateUrl: './lista.component.html',
     styleUrls: ['./lista.component.css'],
     standalone: true,
-    imports: [NgxUiLoaderModule, ToastModule, ButtonModule, TooltipModule, TableModule, SharedModule, DialogModule, NovaFormaPagamentoComponent, AlteracaoFormaPagamentoComponent, NgIf, NgFor]
+    imports: [NgxUiLoaderModule, ToastModule, ButtonModule, TooltipModule, TableModule, SharedModule, DialogModule, NovaFormaPagamentoComponent, AlteracaoFormaPagamentoComponent]
 })
 export class ListaComponent {
     @ViewChild(NovaFormaPagamentoComponent) formaPagamentoInclusao!: NovaFormaPagamentoComponent;

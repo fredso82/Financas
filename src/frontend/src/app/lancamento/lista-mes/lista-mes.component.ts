@@ -5,7 +5,7 @@ import { LancamentoService } from '../lancamento.service';
 import { Lancamento } from '../models/lancamento';
 import { ButtonModule } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
-import { NgIf, CurrencyPipe, DatePipe, registerLocaleData } from '@angular/common';
+import { CurrencyPipe, DatePipe, registerLocaleData } from '@angular/common';
 import { SharedModule } from 'primeng/api';
 import { TableModule } from 'primeng/table';
 import ptBr from '@angular/common/locales/pt';
@@ -17,7 +17,7 @@ registerLocaleData(ptBr)
     templateUrl: './lista-mes.component.html',
     styleUrls: ['./lista-mes.component.scss'],
     standalone: true,
-    imports: [TableModule, SharedModule, NgIf, TooltipModule, ButtonModule, CurrencyPipe, DatePipe]
+    imports: [TableModule, SharedModule, TooltipModule, ButtonModule, CurrencyPipe, DatePipe]
 })
 export class ListaMesComponent {
     @Input() lancamentos: Lancamento[] = [];

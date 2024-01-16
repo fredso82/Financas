@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormaPagamento } from '../models/forma-pagamento';
 import { FormaPagamentoService } from '../forma-pagamento.service';
-import { NgClass, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 
@@ -10,11 +10,10 @@ import { FormsModule } from '@angular/forms';
     templateUrl: './alteracao.component.html',
     standalone: true,
     imports: [
-        FormsModule,
-        InputTextModule,
-        NgClass,
-        NgIf,
-    ],
+    FormsModule,
+    InputTextModule,
+    NgClass
+],
 })
 export class AlteracaoFormaPagamentoComponent implements OnInit {
     @Output() onSave = new EventEmitter<{ sucesso: boolean, dados: any }>();

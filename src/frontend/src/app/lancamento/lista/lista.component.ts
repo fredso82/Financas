@@ -8,7 +8,7 @@ import { LancamentoService } from '../lancamento.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { MessageService, SharedModule } from 'primeng/api';
-import { NgIf } from '@angular/common';
+
 import { DialogModule } from 'primeng/dialog';
 import { ListaMesComponent } from '../lista-mes/lista-mes.component';
 import { TabViewModule } from 'primeng/tabview';
@@ -21,7 +21,7 @@ import { ToastModule } from 'primeng/toast';
     templateUrl: './lista.component.html',
     styleUrls: ['./lista.component.css'],
     standalone: true,
-    imports: [NgxUiLoaderModule, ToastModule, ButtonModule, TooltipModule, RouterLink, TabViewModule, ListaMesComponent, DialogModule, NgIf, SharedModule],
+    imports: [NgxUiLoaderModule, ToastModule, ButtonModule, TooltipModule, RouterLink, TabViewModule, ListaMesComponent, DialogModule, SharedModule],
     providers: [MessageService]
 })
 export class ListaComponent implements OnInit {
