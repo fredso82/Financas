@@ -33,8 +33,9 @@ export class ListaComponent implements OnInit {
     urlService: string = environment.apiUrl;
     modalExclusao: boolean = false;
     lancamento: Lancamento = new Lancamento();
+    lancamentoService = inject(LancamentoService);
 
-    constructor(private http: HttpClient, private router: Router, private lancamentoService: LancamentoService, private ngxService: NgxUiLoaderService, private messageService: MessageService) {
+    constructor(private http: HttpClient, private router: Router, private ngxService: NgxUiLoaderService, private messageService: MessageService) {
     }
 
     ngOnInit(): void {
