@@ -27,7 +27,7 @@ import { ToastModule } from 'primeng/toast';
 export class ListaComponent implements OnInit {
     ano = signal(new Date().getUTCFullYear());
 
-    lancamentos = signal(new Array<Lancamento>());
+    lancamentos = signal<Lancamento[]>([]);
     lancamentosAgrupados = new Map<number, Lancamento[]>();
     mesAtual: number = new Date().getMonth();
     urlService: string = environment.apiUrl;
