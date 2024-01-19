@@ -1,4 +1,4 @@
-import { Component, EventEmitter, HostListener, OnInit, Signal, signal } from '@angular/core';
+import { Component, EventEmitter, HostListener, OnInit, Signal, inject, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { NgxUiLoaderService, NgxUiLoaderModule } from 'ngx-ui-loader';
 import { FormaPagamentoService } from 'src/app/forma-pagamento/forma-pagamento.service';

@@ -1,12 +1,17 @@
 import { Component } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { PrimeNGConfig } from 'primeng/api';
+import { RouterOutlet } from '@angular/router';
+import { TabMenuModule } from 'primeng/tabmenu';
 
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html'
+  selector: 'app-home',
+  standalone: true,
+  imports: [TabMenuModule, RouterOutlet],
+  templateUrl: './home.component.html',
+  styleUrl: './home.component.scss'
 })
-export class AppComponent {
+export class HomeComponent {
     title = 'financas';
     items: MenuItem[] = [
         { label: 'Lançamentos', icon: 'pi pi-fw pi-shopping-bag', routerLink: ['/lancamentos'] },

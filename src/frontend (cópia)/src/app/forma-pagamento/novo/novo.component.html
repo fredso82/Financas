@@ -1,5 +1,0 @@
-<div class="field">
-    <label for="nome">Nome <span class="obrigatorio">*</span></label>
-    <input type="text" pInputText [(ngModel)]="formaPagamento.nome" required autofocus id="nome" [ngClass]="{ 'ng-invalid ng-dirty': submitted && !formaPagamento.nome }" />
-    <small class="p-error block" *ngIf="submitted && !formaPagamento.nome">Informe o nome</small>
-</div>  

@@ -1,8 +1,13 @@
+using System.Text;
+using Financas;
 using Financas.Data;
 using Financas.EndPoints;
 using Microsoft.Azure.Cosmos;
 
 var builder = WebApplication.CreateBuilder(args);
+
+byte[] key = Encoding.ASCII.GetBytes(Settings.Secret);
+builder.Services.AddAuthentication().AddJwtBearer();
 
 builder.Services.AddCors(options =>
 {

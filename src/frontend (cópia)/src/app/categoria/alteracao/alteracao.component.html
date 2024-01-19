@@ -1,5 +1,0 @@
-<div class="field">
-    <label for="nome">Nome <span class="obrigatorio">*</span></label>
-    <input type="text" pInputText [(ngModel)]="categoria.nome" required autofocus id="nome" [ngClass]="{ 'ng-invalid ng-dirty': submitted && !categoria.nome }" />
-    <small class="p-error block" *ngIf="submitted && !categoria.nome">Informe o nome</small>
-</div>  
