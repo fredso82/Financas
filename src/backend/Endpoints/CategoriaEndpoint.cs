@@ -15,7 +15,7 @@ namespace Financas.EndPoints
                 var categorias = await categoriaRepository.GetAll();
                 return Results.Ok(categorias);
 
-            }).WithOpenApi();
+            }).WithOpenApi().RequireAuthorization();
 
             app.MapGet("categorias/{id}", async (CategoriaRepository categoriaRepository, string id) =>
             {
