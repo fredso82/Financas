@@ -1,14 +1,32 @@
-<main>
-	<section>
-		<form action="" id="signin-form">
-			<fieldset>
-				<label for="email-input">Login</label>
-				<input type="text" name="email-input" id="email-input" [(ngModel)]="login" placeholder="informe seu login">
-				
-				<label for="password-input">Senha</label>
-				<input type="password" name="password-input" id="password-input" [(ngModel)]="senha" placeholder="informe sua senha">
-			</fieldset>
-			<input type="submit" value="Entrar" (click)="entrar()">
-		</form>
-	</section>
-</main>
+<p-card header="Faça Login">
+	<form action="" [formGroup]="loginForm" autocomplete="off" class="p-fluid" novalidate (ngSubmit)="onSubmit()">
+		<div class="row">
+			<div class="field col-4">
+				<label>Login</label>
+				<input pInputText formControlName="login" />
+				@if (loginForm.get("login")?.hasError('required') && loginForm.get("login")?.touched) {
+					<small class="p-error block">
+						<p class="p-error block">Informe o login</p>
+					</small>
+				}
+			</div>
+			
+		</div>
+		<div class="row">
+			<div class="field col-4">
+				<div class="flex flex-column gap-2">
+					<label>Senha</label>
+					<input type="password" pInputText formControlName="senha" />
+					@if (loginForm.get("senha")?.hasError('required') && loginForm.get("senha")?.touched) {
+						<small class="p-error block">
+							<p class="p-error block">Informe a senha</p>
+						</small>
+					}
+				</div>
+			</div>
+		</div>
+		<div class="field col-4">
+			<button pButton type="submit" label="Entrar" icon="pi pi-check" class="p-button-success botao-acao" [disabled]="!loginForm.valid"></button>
+		</div>
+	</form>
+</p-card>
