@@ -4,21 +4,6 @@ import { environment } from "src/environments/environment";
 
 export abstract class BaseService {
     protected UrlService: string = environment.apiUrl;
-
-    protected obterHeaderJson() {
-        return {
-            headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-        };
-    }
-
-    protected obterAuthHeaderJson() {
-        return {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('financas.token')}`
-            })
-        };
-    }
     
     protected serviceError(response: Response | any) {
         let customError: string[] = [];
