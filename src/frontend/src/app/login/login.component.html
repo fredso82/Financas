@@ -1,32 +1,41 @@
-<p-card header="Faça Login">
-	<form action="" [formGroup]="loginForm" autocomplete="off" class="p-fluid" novalidate (ngSubmit)="onSubmit()">
-		<div class="row">
-			<div class="field col-4">
-				<label>Login</label>
-				<input pInputText formControlName="login" />
-				@if (loginForm.get("login")?.hasError('required') && loginForm.get("login")?.touched) {
-					<small class="p-error block">
-						<p class="p-error block">Informe o login</p>
-					</small>
-				}
-			</div>
-			
-		</div>
-		<div class="row">
-			<div class="field col-4">
-				<div class="flex flex-column gap-2">
-					<label>Senha</label>
-					<input type="password" pInputText formControlName="senha" />
-					@if (loginForm.get("senha")?.hasError('required') && loginForm.get("senha")?.touched) {
+<section class="login-todo">
+	<div class="login-card">
+		<h2>Faça Login</h2>
+		<form action="" [formGroup]="loginForm" autocomplete="off" class="p-fluid" novalidate (ngSubmit)="onSubmit()">
+			<div class="row">
+				<div class="field col-12">
+					<label>Login</label>
+					<input pInputText formControlName="login" />
+					@if (loginForm.get("login")?.hasError('required') && loginForm.get("login")?.touched) {
 						<small class="p-error block">
-							<p class="p-error block">Informe a senha</p>
+							<p class="p-error block">Informe o login</p>
 						</small>
 					}
 				</div>
+
 			</div>
-		</div>
-		<div class="field col-4">
-			<button pButton type="submit" label="Entrar" icon="pi pi-check" class="p-button-success botao-acao" [disabled]="!loginForm.valid"></button>
-		</div>
-	</form>
-</p-card>
+			<div class="row">
+				<div class="field col-12">
+					<div class="flex flex-column gap-2">
+						<label>Senha</label>
+						<input type="password" pInputText formControlName="senha" />
+						@if (loginForm.get("senha")?.hasError('required') && loginForm.get("senha")?.touched) {
+							<small class="p-error block">
+								<p class="p-error block">Informe a senha</p>
+							</small>
+						}
+					</div>
+				</div>
+			</div>
+			<div class="field col-12">
+				<button pButton type="submit" label="Entrar" icon="pi pi-check" class="p-button-success botao-acao" [disabled]="!loginForm.valid"></button>
+			</div>
+			@if (loginInvalido()) {
+				<small class="p-error block">
+					<p class="p-error block">Login ou senha inválidos</p>
+				</small>
+			}
+			
+		</form>
+	</div>
+</section>

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
@@ -16,6 +16,7 @@ import { LoginService } from './login.service';
 export class LoginComponent {
     router = inject(Router);
     loginForm!: FormGroup;
+    loginInvalido = signal(false);
 
     constructor(private fb: FormBuilder, private loginService: LoginService){
         this.loginForm = this.fb.group({
@@ -26,6 +27,7 @@ export class LoginComponent {
 
     onSubmit() {
         if (this.loginForm.valid){
+            this.loginInvalido.set(false);
             this.loginService.efetuarLogin(this.loginForm.value.login, this.loginForm.value.senha).subscribe({
                 next: (response) => {
                     localStorage.setItem("financas.token", response);
@@ -33,7 +35,7 @@ export class LoginComponent {
                 },
                 error: (e) => {
                     if (e.status === 404) {
-                        alert("Login ou senha inválidos");
+                        this.loginInvalido.set(true);
                         return;
                     }
                     alert("Ocorreu um erro desconhecido!")
