@@ -15,6 +15,7 @@ builder.Services.AddAuthentication(x =>
     x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 }).AddJwtBearer(x => 
 {
+
     x.RequireHttpsMetadata = false;
     x.SaveToken = true;
     x.TokenValidationParameters = new TokenValidationParameters
@@ -52,8 +53,9 @@ builder.Services.AddScoped(c => new TransacaoRepository(cosmosClient, databaseNa
 
 builder.Services.AddAuthorization(option => 
 {
-    option.AddPolicy("admin", policy => policy.RequireRole("manager"));
-    option.AddPolicy("employee", policy => policy.RequireRole("employee"));
+    option.FallbackPolicy = new Microsoft.AspNetCore.Authorization.AuthorizationPolicyBuilder()
+        .RequireAuthenticatedUser()
+        .Build();
 });
 
 var app = builder.Build();
