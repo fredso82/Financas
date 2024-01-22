@@ -13,28 +13,28 @@ export class CategoriaService extends BaseService {
     constructor(private http: HttpClient) { super() }
 
     obterTodos(): Observable<Categoria[]> {
-        return this.http.get<Categoria[]>(this.UrlService + "categorias", this.obterAuthHeaderJson())
+        return this.http.get<Categoria[]>(this.UrlService + "categorias")
             .pipe(
                 first()
             );
     }
 
     incluir(categoria: Categoria): Observable<Categoria> {
-        return this.http.post<Categoria>(this.UrlService + "categorias", categoria, this.obterAuthHeaderJson())
+        return this.http.post<Categoria>(this.UrlService + "categorias", categoria)
             .pipe(
                 first()
             );
     }
 
     alterar(categoria: Categoria): Observable<Categoria> {
-        return this.http.put<Categoria>(`${this.UrlService}categorias/${categoria.id}`, categoria, this.obterAuthHeaderJson())
+        return this.http.put<Categoria>(`${this.UrlService}categorias/${categoria.id}`, categoria)
             .pipe(
                 first()
             );
     }
 
     excluir(id: string): Observable<Categoria> {
-        return this.http.delete<Categoria>(`${this.UrlService}categorias/${id}`, this.obterAuthHeaderJson())
+        return this.http.delete<Categoria>(`${this.UrlService}categorias/${id}`)
             .pipe(
                 first()
             );
