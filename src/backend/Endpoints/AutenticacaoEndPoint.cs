@@ -17,8 +17,6 @@ public static class AutenticacaoEndPoint
 
             return Results.Ok(token);
 
-        }).WithOpenApi();
-
+        }).WithOpenApi().AllowAnonymous();
     }
-
 }
