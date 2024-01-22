@@ -24,3 +24,57 @@
     }
 }
 
+.barra-lancamentos {
+    display: flex;
+    justify-content: space-between; 
+    background-color: white;
+    margin-bottom: 5px;
+    color: #6b7280;
+    font-weight: 700;
+    padding: 0;
+    font-family: var(--font-family);
+}
+
+.meses {
+    background-color: white;
+    display: flex;
+    justify-content: flex-start;
+    padding: 10px 10px 0 0;
+    height: 60px;
+
+    span {
+        cursor: pointer;
+        width: 90px;
+        padding-top: 10px;
+        text-align: center;
+
+        &.ativo {
+            border-bottom: 2px solid #3B82F6;
+            color: #3B82F6;
+
+            &:hover {
+                border-bottom: 2px solid #3B82F6;
+            }
+        }
+
+        &:hover {
+            border-bottom: 2px solid gray;
+        }
+    }
+}
+
+.ano {
+    /* background-color: rgb(251, 251, 251); */
+    padding: 0 7px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* border-radius: 10px;  */
+    border-left: 1px solid rgb(208, 206, 206);
+    /* box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2); */
+
+    .pi {
+        cursor: pointer;
+    }
+}
+

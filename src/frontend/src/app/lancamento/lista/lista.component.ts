@@ -15,6 +15,7 @@ import { TabViewModule } from 'primeng/tabview';
 import { TooltipModule } from 'primeng/tooltip';
 import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
+import { single } from 'rxjs';
 
 @Component({
     selector: 'app-lista',
@@ -28,6 +29,8 @@ export class ListaComponent implements OnInit {
     ano = signal(new Date().getUTCFullYear());
 
     lancamentos = signal<Lancamento[]>([]);
+    lancamentosMes = signal<Lancamento[]>([]);
+
     lancamentosAgrupados = new Map<number, Lancamento[]>();
     mesAtual: number = new Date().getMonth();
     urlService: string = environment.apiUrl;
@@ -48,10 +51,11 @@ export class ListaComponent implements OnInit {
             next: (retorno) => {
                 this.lancamentos.set(retorno);
                 this.lancamentosAgrupados = this.filtrarEAgruparPorMes(retorno, this.ano());
+                this.lancamentosMes.set(this.lancamentosAgrupados.get(this.mesAtual+1)!);
             },
             complete: () => { this.ngxService.stop() }
         }
-        );
+    );
 
         // this.lancamentoService.obterTodos().subscribe({
         //     next: (retorno) => {

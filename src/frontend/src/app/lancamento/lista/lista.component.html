@@ -6,13 +6,38 @@
         pTooltip="Atalho: Alt + n"></p-button>
 </div>
 
-<div class="controle-ano">
+<div class="barra-lancamentos">
+    <div class="meses">
+        <span class="ativo">Janeiro</span>
+        <span>Fevereiro</span>
+        <span>Março</span>
+        <span>Abril</span>
+        <span>Maio</span>
+        <span>Junho</span>
+        <span>Julho</span>
+        <span>Agosto</span>
+        <span>Setembro</span>
+        <span>Outubro</span>
+        <span>Novembro</span>
+        <span>Dezembro</span>
+        
+    </div>
+    <div class="ano">
+        <i class="pi pi-chevron-left" style="font-size: 1.5rem" (click)="anoAnterior()"></i>
+        {{ano()}}
+        <i class="pi pi-chevron-right" style="font-size: 1.5rem" (click)="proximoAno()"></i>
+    </div>
+</div>
+<div>
+    <app-lista-mes [lancamentos]="lancamentosMes()" (onDelete)="excluir($event)"></app-lista-mes>
+</div>
+
+
+<!-- <div class="controle-ano">
     <p-button icon="pi pi-minus" styleClass="p-button-rounded" (onClick)="anoAnterior()"></p-button>
     <p>{{ano()}}</p>
     <p-button icon="pi pi-plus" styleClass="p-button-rounded" (onClick)="proximoAno()"></p-button>
 </div>
-
-
 <p-tabView [activeIndex]="mesAtual">
     <p-tabPanel header="Janeiro">
         <app-lista-mes [lancamentos]="lancamentosAgrupados.get(1)!" (onDelete)="excluir($event)"></app-lista-mes>
@@ -50,8 +75,14 @@
     <p-tabPanel header="Dezembro">
         <app-lista-mes [lancamentos]="lancamentosAgrupados.get(12)!" (onDelete)="excluir($event)"></app-lista-mes>
     </p-tabPanel>
-
-</p-tabView>
+    <p-tabPanel header="Header III">
+        <ng-template pTemplate="header">
+            <i class="pi pi-search"></i>
+            <span>Header III</span>
+            <i class="pi pi-cog"></i>
+        </ng-template>
+    </p-tabPanel>
+</p-tabView> -->
 
 <p-dialog [(visible)]="modalExclusao" header="Atenção!" [modal]="true" [style]="{ width: '450px' }">
     <div class="flex align-items-center justify-content-center">
