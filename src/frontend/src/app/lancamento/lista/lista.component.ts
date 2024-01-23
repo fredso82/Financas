@@ -1,44 +1,58 @@
-import { Component, EventEmitter, HostListener, OnInit, Signal, inject, signal } from '@angular/core';
+import { NgClass } from '@angular/common';
+import { Component, computed, HostListener, inject, OnInit, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { NgxUiLoaderService, NgxUiLoaderModule } from 'ngx-ui-loader';
-import { FormaPagamentoService } from 'src/app/forma-pagamento/forma-pagamento.service';
-import { FormaPagamento } from 'src/app/forma-pagamento/models/forma-pagamento';
-import { Lancamento } from '../models/lancamento';
-import { LancamentoService } from '../lancamento.service';
-import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
+import { NgxUiLoaderModule, NgxUiLoaderService } from 'ngx-ui-loader';
 import { MessageService, SharedModule } from 'primeng/api';
-
-import { DialogModule } from 'primeng/dialog';
-import { ListaMesComponent } from '../lista-mes/lista-mes.component';
-import { TabViewModule } from 'primeng/tabview';
-import { TooltipModule } from 'primeng/tooltip';
 import { ButtonModule } from 'primeng/button';
+import { DialogModule } from 'primeng/dialog';
+import { TabViewModule } from 'primeng/tabview';
 import { ToastModule } from 'primeng/toast';
-import { single } from 'rxjs';
+import { TooltipModule } from 'primeng/tooltip';
+
+import { LancamentoService } from '../lancamento.service';
+import { ListaMesComponent } from '../lista-mes/lista-mes.component';
+import { Lancamento } from '../models/lancamento';
 
 @Component({
     selector: 'app-lista',
     templateUrl: './lista.component.html',
     styleUrls: ['./lista.component.css'],
     standalone: true,
-    imports: [NgxUiLoaderModule, ToastModule, ButtonModule, TooltipModule, RouterLink, TabViewModule, ListaMesComponent, DialogModule, SharedModule],
+    imports: [
+        NgxUiLoaderModule, 
+        ToastModule, 
+        ButtonModule, 
+        TooltipModule, 
+        RouterLink, 
+        TabViewModule, 
+        ListaMesComponent, 
+        DialogModule, 
+        SharedModule,
+        NgClass],
     providers: [MessageService]
 })
 export class ListaComponent implements OnInit {
     ano = signal(new Date().getUTCFullYear());
+    mesAtual = signal(new Date().getMonth()+1);
+    janeiro = computed(() => this.mesAtual() === 1);
+    fevereiro = computed(() => this.mesAtual() === 2);
+    marco = computed(() => this.mesAtual() === 3);
+    abril = computed(() => this.mesAtual() === 4);
+    maio = computed(() => this.mesAtual() === 5);
+    junho = computed(() => this.mesAtual() === 6);
+    julho = computed(() => this.mesAtual() === 7);
+    agosto = computed(() => this.mesAtual() === 8);
+    setembro = computed(() => this.mesAtual() === 9);
+    outubro = computed(() => this.mesAtual() === 10);
+    novembro = computed(() => this.mesAtual() === 11);
+    dezembro = computed(() => this.mesAtual() === 12);
 
     lancamentos = signal<Lancamento[]>([]);
-    lancamentosMes = signal<Lancamento[]>([]);
-
-    lancamentosAgrupados = new Map<number, Lancamento[]>();
-    mesAtual: number = new Date().getMonth();
-    urlService: string = environment.apiUrl;
     modalExclusao: boolean = false;
     lancamento: Lancamento = new Lancamento();
     lancamentoService = inject(LancamentoService);
 
-    constructor(private http: HttpClient, private router: Router, private ngxService: NgxUiLoaderService, private messageService: MessageService) {
+    constructor(private router: Router, private ngxService: NgxUiLoaderService, private messageService: MessageService) {
     }
 
     ngOnInit(): void {
@@ -47,51 +61,12 @@ export class ListaComponent implements OnInit {
     }
 
     atualizarLancamentos() {
-        this.http.get<Lancamento[]>(this.urlService + "transacoes").subscribe({
+        this.lancamentoService.obterPorMes(this.ano(), this.mesAtual()).subscribe({
             next: (retorno) => {
                 this.lancamentos.set(retorno);
-                this.lancamentosAgrupados = this.filtrarEAgruparPorMes(retorno, this.ano());
-                this.lancamentosMes.set(this.lancamentosAgrupados.get(this.mesAtual+1)!);
             },
             complete: () => { this.ngxService.stop() }
-        }
-    );
-
-        // this.lancamentoService.obterTodos().subscribe({
-        //     next: (retorno) => {
-        //         this.lancamentos = retorno;
-        //         this.lancamentosAgrupados = this.filtrarEAgruparPorMes(retorno, 2023);
-        //     },
-        //     complete:() => { this.ngxService.stop() }
-        // });
-    }
-
-    filtrarEAgruparPorMes(lancamentos: Lancamento[], ano: number): Map<number, Lancamento[]> {
-        const lancamentosFiltradosPorAno = lancamentos.filter(lancamento => {
-            const dataLancamento = new Date(lancamento.dataInclusao);
-            return dataLancamento.getFullYear() === ano;
         });
-
-        const lancamentosAgrupadosPorMes = new Map<number, Lancamento[]>();
-
-        for (const lancamento of lancamentosFiltradosPorAno) {
-            const dataLancamento = new Date(lancamento.dataInclusao);
-            const mes = dataLancamento.getMonth() + 1;
-
-            if (!lancamentosAgrupadosPorMes.has(mes)) {
-                lancamentosAgrupadosPorMes.set(mes, []);
-            }
-
-            lancamentosAgrupadosPorMes.get(mes)?.push(lancamento);
-        }
-
-        return lancamentosAgrupadosPorMes;
-    }
-
-    
-    obterRealizadoNoMes(mes: number, realizado: boolean): Lancamento[]{
-        const retorno = this.lancamentosAgrupados.get(mes)?.filter(l => { return l.realizado === realizado});
-        return retorno!;
     }
 
     @HostListener('document:keydown', ['$event'])
@@ -120,15 +95,23 @@ export class ListaComponent implements OnInit {
                 this.atualizarLancamentos();
             }
         });
-
     }
 
     anoAnterior() {
         this.ano.update(a => a - 1);
+        this.ngxService.start()
         this.atualizarLancamentos();
     }
+    
     proximoAno() {
         this.ano.update(a => a + 1);
+        this.ngxService.start()
+        this.atualizarLancamentos();
+    }
+
+    setMes(mes: number) {
+        this.mesAtual.set(mes);
+        this.ngxService.start()
         this.atualizarLancamentos();
     }
 }
