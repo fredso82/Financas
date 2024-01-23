@@ -18,6 +18,12 @@ namespace Financas.Data
             return (await iterator.ReadNextAsync()).ToList();
         }
 
+        public async Task<List<Transacao>> GetByMonth(int year, int month)
+        {
+            var iterator = _container.GetItemQueryIterator<Transacao>($"SELECT * FROM Transacoes t WHERE t.DataInclusao like '{year}-{month.ToString("D2")}%'");
+            return (await iterator.ReadNextAsync()).ToList();
+        }
+
         public async Task<Transacao?> GetById(string id)
         {
             try

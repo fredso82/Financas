@@ -11,6 +11,10 @@ export class LancamentoService extends BaseService {
 
     constructor(private http: HttpClient) { super() }
 
+    obterPorMes(ano: number, mes: number): Observable<Lancamento[]> {
+        return this.http.get<Lancamento[]>(`${this.UrlService}transacaoes-por-mes/${ano}/${mes}`);
+    }
+    
     obterTodos(): Observable<Lancamento[]> {
         return this.http.get<Lancamento[]>(this.UrlService + "transacoes")
             .pipe(

@@ -15,6 +15,13 @@ namespace Financas.EndPoints
 
             }).WithOpenApi();
 
+            app.MapGet("transacaoes-por-mes/{ano}/{mes}", async(TransacaoRepository transacaoRepository, int ano, int mes) =>
+            {
+                var transacoes = await transacaoRepository.GetByMonth(ano, mes);
+                return Results.Ok(transacoes);
+
+            }).WithOpenApi().AllowAnonymous();
+
             app.MapGet("transacoes/{id}", async (TransacaoRepository transacaoRepository, string id) =>
             {
                 var transacao = await transacaoRepository.GetById(id);
