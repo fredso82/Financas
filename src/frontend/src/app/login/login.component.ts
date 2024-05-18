@@ -7,18 +7,18 @@ import { CardModule } from 'primeng/card';
 import { LoginService } from './login.service';
 
 @Component({
-  selector: 'app-login',
-  standalone: true,
-  imports: [FormsModule, InputTextModule, ButtonModule, ReactiveFormsModule, CardModule],
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+    selector: 'app-login',
+    standalone: true,
+    imports: [FormsModule, InputTextModule, ButtonModule, ReactiveFormsModule, CardModule],
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
     router = inject(Router);
     loginForm!: FormGroup;
     loginInvalido = signal(false);
 
-    constructor(private fb: FormBuilder, private loginService: LoginService){
+    constructor(private fb: FormBuilder, private loginService: LoginService) {
         this.loginForm = this.fb.group({
             login: ['', [Validators.required]],
             senha: ['', [Validators.required]]
@@ -26,7 +26,7 @@ export class LoginComponent {
     }
 
     onSubmit() {
-        if (this.loginForm.valid){
+        if (this.loginForm.valid) {
             this.loginInvalido.set(false);
             this.loginService.efetuarLogin(this.loginForm.value.login, this.loginForm.value.senha).subscribe({
                 next: (response) => {
@@ -47,7 +47,7 @@ export class LoginComponent {
             //     return;
             // }
             // alert("Login ou senha inválidos");
-        } 
+        }
     }
     // entrar() : void {
     //     if (this.login == "admin" && this.senha && "admin") {

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, first, take } from 'rxjs';
+import { Observable, catchError, first, of, take } from 'rxjs';
 
 import { BaseService } from '../services/base.service';
 import { Categoria } from './models/categoria';
@@ -12,9 +12,10 @@ export class CategoriaService extends BaseService {
 
     constructor(private http: HttpClient) { super() }
 
-    obterTodos(): Observable<Categoria[]> {
+    obterTodos() {
         return this.http.get<Categoria[]>(this.UrlService + "categorias")
             .pipe(
+                catchError(this.serviceError),
                 first()
             );
     }

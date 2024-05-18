@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, output } from '@angular/core';
 import { FormaPagamento } from '../models/forma-pagamento';
 import { FormaPagamentoService } from '../forma-pagamento.service';
 import { NgClass } from '@angular/common';
@@ -13,7 +13,7 @@ import { FormsModule } from '@angular/forms';
     imports: [FormsModule, InputTextModule, NgClass]
 })
 export class NovaFormaPagamentoComponent implements OnInit {
-    @Output() onSave = new EventEmitter<{ sucesso: boolean, dados: any }>();
+    onSave = output<{ sucesso: boolean, dados: any }>();
 
     formaPagamento: FormaPagamento;
     submitted = false;

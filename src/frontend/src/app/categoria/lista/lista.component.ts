@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild, signal } from '@angular/core';
 import { NgxUiLoaderService, NgxUiLoaderModule } from 'ngx-ui-loader';
 
 import { CategoriaService } from '../categoria.service';
@@ -25,17 +25,17 @@ export class ListaComponent implements OnInit {
     @ViewChild(NovaCategoriaComponent) categoriaInclusao!: NovaCategoriaComponent;
     @ViewChild(AlteracaoCategoriaComponent) categoriaAlteracao!: AlteracaoCategoriaComponent;
 
-    categorias: Categoria[] = [];
-    categoria: Categoria = { id: "", nome: "" };
-    dialogVisible = false;
-    errorsMessage: string[] = [];
-    modalInclusao = false;
-    modalAlteracao = false;
-    modalExclusao = false;
+    categorias = signal<Categoria[]>([]);
+    categoria = signal<Categoria>({ id: "", nome: "" });
+    errorsMessage = signal<string[]>([]);
+    dialogVisible = signal(false);
+    modalInclusao = signal(false);
+    modalAlteracao = signal(false);
+    modalExclusao = signal(false);
 
     constructor(private categoriaService: CategoriaService, private ngxService: NgxUiLoaderService, private messageService: MessageService) {
     }
-    
+
     ngOnInit(): void {
         this.ngxService.start()
         this.atualizarCategorias();
@@ -47,50 +47,47 @@ export class ListaComponent implements OnInit {
         if (targetElement.tagName === 'INPUT' || targetElement.tagName === 'TEXTAREA') {
             return;
         }
-        
+
         if (event.altKey && event.key === 'n') {
-            this.modalInclusao = true;
+            this.modalInclusao.set(true);
         }
     }
 
     processarFalha(fail: any) {
         fail.error.forEach((msg: string) => {
-            this.errorsMessage.push(msg);
-            this.dialogVisible = true;
+            this.errorsMessage.update(values => [...values, msg]);
+            this.dialogVisible.set(true);
         });
     }
 
     atualizarCategorias() {
         this.categoriaService.obterTodos()
             .subscribe({
-                next: (retorno) => {
-                    this.categorias = retorno;
-                },
+                next: (retorno) => { this.categorias.set(retorno) },
                 complete: () => { this.ngxService.stop() },
-                error: (e) => {
-                    this.processarFalha(e);
-                }
+                error: (e) => { this.processarFalha(e) }
             });
     }
+
     hideDialog() {
-        this.modalInclusao = false;
-        this.modalAlteracao = false;
+        this.modalInclusao.set(false);
+        this.modalAlteracao.set(false);
     }
 
 
     editar(categoria: Categoria) {
-        this.categoria = { ...categoria };
-        this.modalAlteracao = true;
+        this.categoria.set({ ...categoria });
+        this.modalAlteracao.set(true);
     }
 
     excluir(categoria: Categoria) {
-        this.categoria = { ...categoria };
-        this.modalExclusao = true;
+        this.categoria.set({ ...categoria });
+        this.modalExclusao.set(true);
     }
 
     confirmarExclusao() {
-        this.modalExclusao = false;
-        this.categoriaService.excluir(this.categoria.id).subscribe({
+        this.modalExclusao.set(false);
+        this.categoriaService.excluir(this.categoria().id).subscribe({
             next: () => {
                 this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Categoria excluída com sucesso!', life: 3000 });
                 this.atualizarCategorias()
@@ -100,7 +97,7 @@ export class ListaComponent implements OnInit {
     }
 
     processarInclusao(resultado: any) {
-        this.errorsMessage = [];
+        this.errorsMessage.set([]);
         if (resultado.sucesso) {
             this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Categoria incluída com sucesso!', life: 3000 });
             this.hideDialog();
@@ -111,7 +108,7 @@ export class ListaComponent implements OnInit {
     }
 
     processarAlteracao(resultado: any) {
-        this.errorsMessage = [];
+        this.errorsMessage.set([]);
         if (resultado.sucesso) {
             this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Categoria alterada com sucesso!', life: 3000 });
             this.hideDialog();
