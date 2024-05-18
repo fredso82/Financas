@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, input, output } from '@angular/core';
 import { FormaPagamento } from '../models/forma-pagamento';
 import { FormaPagamentoService } from '../forma-pagamento.service';
 import { NgClass } from '@angular/common';
@@ -16,9 +16,8 @@ import { FormsModule } from '@angular/forms';
 ],
 })
 export class AlteracaoFormaPagamentoComponent implements OnInit {
-    @Output() onSave = new EventEmitter<{ sucesso: boolean, dados: any }>();
-    @Input() formaPagamento: FormaPagamento = {id: "", nome: ""}; 
-    
+    onSave = output<{ sucesso: boolean, dados: any }>();
+    formaPagamento = input<FormaPagamento>({id: "", nome: ""});
     submitted = false;
 
     constructor(private formaPagamentoService: FormaPagamentoService) {
@@ -29,10 +28,10 @@ export class AlteracaoFormaPagamentoComponent implements OnInit {
 
     gravar() {
         this.submitted = true;
-        if (!this.formaPagamento.nome.trim())
+        if (!this.formaPagamento().nome.trim())
             return;
 
-        this.formaPagamentoService.alterar(this.formaPagamento).subscribe({
+        this.formaPagamentoService.alterar(this.formaPagamento()).subscribe({
             next: (e) => {
                 this.onSave.emit({ sucesso: true, dados: this.formaPagamento });
             },

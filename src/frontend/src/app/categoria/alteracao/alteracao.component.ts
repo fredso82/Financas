@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, input, output } from '@angular/core';
 import { Categoria } from '../models/categoria';
 import { CategoriaService } from '../categoria.service';
 import { NgClass } from '@angular/common';
@@ -12,9 +12,8 @@ import { FormsModule } from '@angular/forms';
     imports: [FormsModule, InputTextModule, NgClass]
 })
 export class AlteracaoCategoriaComponent implements OnInit {
-    @Output() onSave = new EventEmitter<{ sucesso: boolean, dados: any }>();
-    @Input() categoria: Categoria = {id: "", nome: ""}; 
-    
+    onSave = output<{ sucesso: boolean, dados: any }>();
+    categoria = input<Categoria>({id: "", nome: ""});
     submitted = false;
     
     constructor(private categoriaService: CategoriaService) {     
@@ -25,10 +24,10 @@ export class AlteracaoCategoriaComponent implements OnInit {
 
     gravar() {
         this.submitted = true;
-        if (!this.categoria.nome.trim())
+        if (!this.categoria().nome.trim())
             return;
 
-        this.categoriaService.alterar(this.categoria).subscribe({
+        this.categoriaService.alterar(this.categoria()).subscribe({
             next: (e) => {
                 this.onSave.emit({ sucesso: true, dados: this.categoria });
             },

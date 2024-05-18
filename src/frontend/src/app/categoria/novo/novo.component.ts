@@ -4,6 +4,7 @@ import { CategoriaService } from '../categoria.service';
 import { NgClass } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
+import { output } from '@angular/core';
 
 @Component({
     selector: 'app-categoria-novo',
@@ -12,7 +13,7 @@ import { FormsModule } from '@angular/forms';
     imports: [FormsModule, InputTextModule, NgClass]
 })
 export class NovaCategoriaComponent implements OnInit {
-    @Output() onSave = new EventEmitter<{ sucesso: boolean, dados: any }>();
+    onSave = output<{ sucesso: boolean, dados: any }>();
 
     categoria: Categoria;
     submitted = false;
